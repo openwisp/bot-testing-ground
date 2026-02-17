@@ -18,13 +18,12 @@ def main():
     if not api_key:
         print("Skipping: No API Key found.")
         return
-    client = genai.Client(api_key=api_key, http_options={'api_version': 'v1alpha'})
-
-    error_log = get_error()
-    try:
+    client = genai.Client(api_key=api_key)
+    error_log = get_error() 
+    if os.path.exists("repo_context.xml"):
         with open("repo_context.xml", "r") as f:
             context = f.read()
-    except FileNotFoundError:
+    else:
         context = "Context missing."
 
     prompt = f"""
@@ -34,7 +33,7 @@ def main():
     """
     try:
         response = client.models.generate_content(
-            model='gemini-2.0-flash', 
+            model='gemini-2.5-flash-lite', 
             contents=prompt
         )
         print(f"## AI Fix\n\n{response.text}")
