@@ -17,9 +17,17 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Master (Scripts)
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: trusted_scripts
+
+      - name: Checkout PR (Code to Review)
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+          path: pr_code
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -37,7 +45,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           name: failure-evidence
-          path: .  
+          path: .   
 
       - name: Get PR Number
         run: echo "PR_NUMBER=$(cat pr_number.txt)" >> $GITHUB_ENV
@@ -48,17 +56,20 @@ jobs:
           RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           gh run view $RUN_ID --log-failed > failed_logs.txt
-         
+          
       - name: Debug - Verify File Content
-        run: cat ci_exp/file.py
+        run: cat pr_code/ci_exp/file.py
 
       - name: Pack Context
-        run: repomix --include "ci_exp/**" --style xml --output repo_context.xml
+        run: |
+          cd pr_code
+          repomix --include "ci_exp/**" --style xml --output ../repo_context.xml
       
       - name: Run AI Analysis
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python .github/scripts/ai_fix.py > solution.md
+        run: |
+          python trusted_scripts/.github/scripts/ai_fix.py > solution.md
 
       - name: Post Comment
         env:
