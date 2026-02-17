@@ -25,8 +25,8 @@ jobs:
       - name: Run Checks & Tests
         run: |
           pip install pytest flake8 black
-          # Now this works because we are inside ./ci_exp
           python qa.py
+          pytest
 
       - name: Save PR Number
         if: failure()
