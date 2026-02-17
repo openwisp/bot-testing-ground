@@ -18,10 +18,9 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       
@@ -30,7 +29,7 @@ jobs:
           pip install google-genai
           npm install -g repomix
 
-      - name: Download Artifacts
+      - name: Download PR Number
         uses: actions/download-artifact@v4
         with:
           run-id: ${{ github.event.workflow_run.id }}
@@ -41,15 +40,23 @@ jobs:
       - name: Get PR Number
         run: echo "PR_NUMBER=$(cat pr_number.txt)" >> $GITHUB_ENV
 
+      - name: Fetch CI Logs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          # Fetch logs for the failed run. --log-failed only grabs failed steps
+          gh run view $RUN_ID --log-failed > failed_logs.txt
+          
       - name: Pack Context
         run: repomix --include "ci_exp/**" --style xml --output repo_context.xml
       
-      - name: Run AI
+      - name: Run AI Analysis
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python .github/scripts/ai_fix.py > solution.md
 
-      - name: Comment
+      - name: Post Comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ env.PR_NUMBER }}
