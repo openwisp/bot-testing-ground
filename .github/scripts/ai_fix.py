@@ -18,7 +18,7 @@ def main():
     if not api_key:
         print("Skipping: No API Key found.")
         return
-    client = genai.Client(api_key=api_key)
+    client = genai.Client(api_key=api_key, http_options={'api_version': 'v1alpha'})
 
     error_log = get_error()
     try:
