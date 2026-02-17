@@ -22,9 +22,30 @@ def main():
     error_log = get_error() 
     if os.path.exists("repo_context.xml"):
         with open("repo_context.xml", "r") as f:
-            context = f.read()
-    else:
-        context = "Context missing."
+            repo_context = f.read()
+
+    client = genai.Client(api_key=api_key)
+    system_instruction = """
+
+    You are an automated CI Triage Bot for the OpenWISP project. 
+    Your goal is to analyze CI failure logs and provide helpful, actionable feedback to contributors.
+
+    Categorize the failure into one of these types:
+    1. **Code Style/QA**: (flake8, isort, black, csslint, jslint).
+       - Remediation: Explain the issue and tell them to run `openwisp-qa-format`.
+    2. **Commit Message**: (checkcommit, conventional commits).
+       - Remediation: Propose a correct commit message based on the code changes.
+    3. **Test Failure**: (pytest, logic errors).
+       - Remediation: Carefully compare the function logic and the test assertion. 
+       - If the function logic matches its name but the test assertion is mathematically impossible, tell the contributor to fix the test.
+       - If the function logic is wrong, tell them to fix the code.
+
+    **Response Format:**
+    - Start with a friendly greeting.
+    - clearly state WHAT failed.
+    - Provide the "Remediation" step (command to run or code to change).
+    - Use Markdown.
+    """
 
     prompt = f"""
     Fix this failing test.

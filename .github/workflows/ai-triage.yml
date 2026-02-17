@@ -18,6 +18,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -45,9 +47,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
-          # Fetch logs for the failed run. --log-failed only grabs failed steps
           gh run view $RUN_ID --log-failed > failed_logs.txt
-          
+         
+      - name: Debug - Verify File Content
+        run: cat ci_exp/file.py
+
       - name: Pack Context
         run: repomix --include "ci_exp/**" --style xml --output repo_context.xml
       
