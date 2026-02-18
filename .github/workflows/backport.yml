@@ -32,7 +32,7 @@ jobs:
       github.event.issue.pull_request &&
       github.event.issue.pull_request.merged_at != null &&
       github.event.issue.state == 'closed' &&
-      contains(fromJSON('["MEMBER", "OWNER"]'), github.event.comment.author_association) &&
+      contains(fromJSON('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.comment.author_association) &&
       startsWith(github.event.comment.body, '/backport')
     uses: ./.github/workflows/reusable-backport.yml
     with:
