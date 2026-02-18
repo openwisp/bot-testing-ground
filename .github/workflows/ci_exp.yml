@@ -1,0 +1,21 @@
+name: CI Experiment 
+
+on:
+  pull_request:
+    paths:
+      - 'ci_exp/**' 
+
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'ci_exp/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Broken Script
+        run: python ci_exp/test_file.py
