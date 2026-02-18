@@ -2,7 +2,7 @@ name: AI Triage (Caller)
 
 on:
   workflow_run:
-    workflows: ["CI Experiment (Fail)"]
+    workflows: ["CI Experiment"]
     types:
       - completed
 
