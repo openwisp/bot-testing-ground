@@ -1,10 +1,16 @@
-name: CI Experiment (Fail)
+name: CI Experiment 
 
 on:
+  pull_request:
+    paths:
+      - 'ci_exp/**' 
+
   push:
+    branches:
+      - master
+      - main
     paths:
       - 'ci_exp/**'
-  pull_request:
 
 jobs:
   test:
