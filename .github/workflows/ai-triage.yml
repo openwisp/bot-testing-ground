@@ -43,7 +43,7 @@ jobs:
   call-triage-bot:
     needs: find-pr
     if: ${{ needs.find-pr.outputs.pr_number != '' }}
-    uses: openwisp/openwisp-utils/.github/workflows/reusable-ai-triage.yml@<YOUR_BRANCH_NAME>
+    uses: openwisp/openwisp-utils/.github/workflows/reusable-ai-triage.yml@issues/524-ci-failure-bot
     with:
       pr_number: ${{ needs.find-pr.outputs.pr_number }}
       head_sha: ${{ github.event.workflow_run.head_sha }}
