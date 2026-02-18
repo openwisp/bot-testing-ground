@@ -1,4 +1,4 @@
-name: AI Triage Experiment
+name: AI Triage (Caller)
 
 on:
   workflow_run:
@@ -12,69 +12,44 @@ permissions:
   contents: read
 
 jobs:
-  analyze:
+  find-pr:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    
+    outputs:
+      pr_number: ${{ steps.pr.outputs.number }}
     steps:
-      - name: Checkout Master (Scripts)
-        uses: actions/checkout@v4
-        with:
-          ref: master
-          path: trusted_scripts
-
-      - name: Checkout PR (Code to Review)
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          path: pr_code
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      
-      - name: Install Tools
-        run: |
-          pip install google-genai
-          npm install -g repomix
-
-      - name: Download PR Number
-        uses: actions/download-artifact@v4
-        with:
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          name: failure-evidence
-          path: .   
-
-      - name: Get PR Number
-        run: echo "PR_NUMBER=$(cat pr_number.txt)" >> $GITHUB_ENV
-
-      - name: Fetch CI Logs
+      - name: Find PR Number
+        id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
-          REPO: ${{ github.repository }}
         run: |
-          gh run view $RUN_ID --repo $REPO --log-failed > failed_logs.txt
-          
-      - name: Debug - Verify File Content
-        run: cat pr_code/ci_exp/file.py
+          PR_NUMBER="${{ github.event.workflow_run.pull_requests[0].number }}"
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Found PR #$PR_NUMBER from workflow payload."
+            echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+          echo "Payload empty. Searching for PR by Commit SHA ($HEAD_SHA)..."
+          PR_NUMBER=$(gh pr list --search "$HEAD_SHA" --state open --json number --jq '.[0].number')
+          if [ -n "$PR_NUMBER" ]; then
+             echo "Found PR #$PR_NUMBER using Commit SHA."
+             echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+             exit 0
+          fi
+          echo "::warning::No open PR found. This was likely a push to master."
+          exit 0
 
-      - name: Pack Context
-        run: |
-          cd pr_code
-          repomix --include "ci_exp/**" --style xml --output ../repo_context.xml
-      
-      - name: Run AI Analysis
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python trusted_scripts/.github/scripts/ai_fix.py > solution.md
-
-      - name: Post Comment
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUM: ${{ env.PR_NUMBER }}
-          REPO: ${{ github.repository }}
-        run: gh pr comment "$PR_NUM" --repo "$REPO" --body-file solution.md
+  call-triage-bot:
+    needs: find-pr
+    if: ${{ needs.find-pr.outputs.pr_number != '' }}
+    uses: openwisp/openwisp-utils/.github/workflows/reusable-ai-triage.yml@issues/524-ci-failure-bot
+    with:
+      pr_number: ${{ needs.find-pr.outputs.pr_number }}
+      head_sha: ${{ github.event.workflow_run.head_sha }}
+      head_repo: ${{ github.event.workflow_run.head_repository.full_name }}
+      run_id: ${{ github.event.workflow_run.id }}
+    secrets:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
+      PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}

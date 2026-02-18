@@ -1,40 +1,15 @@
 name: CI Experiment (Fail)
 
 on:
-  pull_request:
+  push:
     paths:
       - 'ci_exp/**'
-      - '.github/workflows/ci_exp.yml'
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ./ci_exp
-
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Run Checks & Tests
-        run: |
-          pip install pytest flake8 black
-          python qa.py
-          pytest
-
-      - name: Save PR Number
-        if: failure()
-        run: echo "${{ github.event.number }}" > pr_number.txt
-
-      - name: Upload Artifacts
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failure-evidence
-          path: ci_exp/pr_number.txt
+      - name: Run Broken Script
+        run: python ci_exp/test_file.py
