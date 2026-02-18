@@ -49,6 +49,7 @@ jobs:
       pr_number: ${{ needs.find-pr.outputs.pr_number }}
       head_sha: ${{ github.event.workflow_run.head_sha }}
       head_repo: ${{ github.event.workflow_run.head_repository.full_name }}
+      base_repo: ${{ github.repository }}
       run_id: ${{ github.event.workflow_run.id }}
     secrets:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
