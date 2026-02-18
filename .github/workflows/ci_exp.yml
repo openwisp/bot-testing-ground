@@ -1,9 +1,10 @@
-name: CI Experiment
+name: CI Experiment 
 
 on:
   pull_request:
     paths:
       - 'ci_exp/**' 
+
   push:
     branches:
       - master
