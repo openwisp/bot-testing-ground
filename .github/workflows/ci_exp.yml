@@ -24,7 +24,7 @@ jobs:
           name: failure-evidence
           path: pr_number.txt
 
-      - name: Run Broken Script
+      - name: Run Script
         run: |
           echo "Running critical tests..."
           python ci_exp/test_file.py
