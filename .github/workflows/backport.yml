@@ -19,7 +19,7 @@ permissions:
 jobs:
   backport-on-push:
     if: github.event_name == 'push'
-    uses: atif09/openwisp-utils/.github/workflows/reusable-backport.yml@issues/501-automate-backporting-fixes
+    uses: ./.github/workflows/reusable-backport.yml
     with:
       commit_sha: ${{ github.sha }}
     secrets:
@@ -30,10 +30,11 @@ jobs:
     if: >
       github.event_name == 'issue_comment' &&
       github.event.issue.pull_request &&
+      github.event.issue.pull_request.merged_at != null &&
       github.event.issue.state == 'closed' &&
-      contains(fromJSON('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.comment.author_association) &&
+      contains(fromJSON('["MEMBER", "OWNER"]'), github.event.comment.author_association) &&
       startsWith(github.event.comment.body, '/backport')
-    uses: atif09/openwisp-utils/.github/workflows/reusable-backport.yml@issues/501-automate-backporting-fixes
+    uses: ./.github/workflows/reusable-backport.yml
     with:
       pr_number: ${{ github.event.issue.number }}
       comment_body: ${{ github.event.comment.body }}
