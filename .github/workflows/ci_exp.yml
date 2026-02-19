@@ -17,8 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Broken Script
-        run: python ci_exp/test_file.py
-      
       - name: Run QA Checks
         run: python ci_exp/qa.py
+
+      - name: Run Broken Script
+        if: always()
+        run: python ci_exp/test_file.py
