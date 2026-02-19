@@ -1,9 +1,8 @@
 name: Changelog Bot
 
 on:
-  # Trigger when a PR review is submitted with approval
-  pull_request_review:
-    types: [submitted]
+  issue_comment:
+    types: [created]
 
 jobs:
   changelog:
