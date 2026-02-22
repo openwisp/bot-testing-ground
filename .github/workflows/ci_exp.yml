@@ -1,3 +1,17 @@
+name: CI Experiment
+
+on:
+  pull_request:
+    paths:
+      - 'ci_exp/**' 
+
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'ci_exp/**'
+
 jobs:
   test:
     runs-on: ubuntu-latest
