@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Simulate OpenWISP checkcommit failure
+        run: |
+          echo "ERROR: checkcommit failed: No capital letter after prefix. Message: '[qa] updated python script.'"
+          exit 1
       
       - name: Set up Python
         uses: actions/setup-python@v5
