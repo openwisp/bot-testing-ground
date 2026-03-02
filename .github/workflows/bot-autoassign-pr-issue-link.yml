@@ -25,13 +25,13 @@ jobs:
           repository: Eeshu-Yadav/openwisp-utils
           ref: issues/571-automate-assigning-unassigning-issues
           sparse-checkout: |
-            openwisp_utils/bots
+            .github/actions/bot-autoassign
           sparse-checkout-cone-mode: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: pip install "PyGithub>=2.0.0"
@@ -44,4 +44,4 @@ jobs:
           EVENT_DATA: ${{ toJson(github.event) }}
         run: |
           echo "$EVENT_DATA" > event.json
-          python -m openwisp_utils.bots.auto_assign issue_assignment event.json
+          python .github/actions/bot-autoassign/__main__.py issue_assignment event.json
