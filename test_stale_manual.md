@@ -1,0 +1,1 @@
+# Manual Stale PR Demo\nThis PR is created to test the stale PR bot manually.\n
