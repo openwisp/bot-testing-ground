@@ -2,95 +2,70 @@ name: CI Experiment
 
 on:
   pull_request:
-    paths:
-      - 'ci_exp/**'
-
   push:
     branches:
-      - master
       - main
-    paths:
-      - 'ci_exp/**'
+      - master
 
 jobs:
 
-  qa-checks:
+  job1:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Large Hallucinating Step
+        run: |
+          echo "Starting massive hallucination output..."
+          for i in {1..200}; do
+            echo "ERROR $i: cosmic radiation error"
+          done
+          echo "This step always passes."
+
+      - name: Intentional Failure
+        run: |
+          echo "Simulated failure: checkcommit violation"
+          echo "ERROR: checkcommit failed: No capital letter after prefix."
+          exit 1
+
+      - name: Post Failure Step
+        if: always()
+        run: |
+          echo "This runs even after failure"
+          echo "Testing log parsing behavior"
+
+
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Another Hallucination Step
+        run: |
+          for i in {1..150}; do
+            echo "Random CI noise line $i: generating misleading stack traces and fake warnings..."
+          done
+
+      - name: Python Setup
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: Install QA Tools
-        run: pip install black flake8
-
-      - name: Generate Large Hallucinating Logs
+      - name: Fake Python Error
         run: |
-          echo "Starting hallucinating logs..."
-          for i in {1..500}; do
-        echo "LOG $i: ERROR: packet checksumm drift, kernel memory fragmentation, and unrelated cosmic radiation interference."
-          done
-          echo "Large log generation complete."
-
-      - name: Simulate QA Failure
-        run: |
-          echo "Running QA checks..."
-          echo "ERROR: checkcommit failed: No capital letter after prefix."
-          echo "Message: '[qa] updated python script.'"
+          echo "Traceback (most recent call last):"
+          echo "  File \"test.py\", line 10, in <module>"
+          echo "ValueError: Something went terribly wrong"
           exit 1
 
-      - name: Post Failure Debug
-        if: always()
-        run: |
-          echo "This step always runs even if previous failed."
-          echo "Collecting debug information..."
-          uname -a
-          python --version
 
-
-  integration-tests:
+  job3:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Fake Integration Logs
+      - name: Successful Job
         run: |
-          echo "Running integration test setup..."
-          for i in {1..300}; do
-            echo "Integration log line $i: simulated RPC handshake with device $i succeeded."
-          done
-          echo "Integration environment ready."
-
-      - name: Simulate Broken Script
-        run: |
-          echo "Running broken script..."
-          python ci_exp/test_file.py
-
-      - name: Generate Additional Noise Logs
-        if: always()
-        run: |
-          echo "Generating additional noisy logs..."
-          for i in {1..200}; do
-            echo "Noise $i: simulated packet routing failure with retry mechanism engaged."
-          done
-
-
-  hallucination-pass-job:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Generate Massive Passing Logs
-        run: |
-          echo "Starting massive hallucination job..."
-
-          for i in {1..1000}; do
-            echo "AI hallucination log $i:"
-            echo "The OpenWISP controller detected a phantom device configuration mismatch in a non-existent subnet. Attempting reconciliation with virtual routers and imaginary telemetry endpoints."
-          done
-
-          echo "Job completed successfully."
+          echo "This job succeeds"
+          echo "Used to verify that only failed jobs are parsed"
