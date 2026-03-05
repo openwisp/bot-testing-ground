@@ -18,8 +18,8 @@ jobs:
       - name: Large Hallucinating Step
         run: |
           echo "Starting massive hallucination output..."
-          for i in {1..200}; do
-            echo "ERROR $i: cosmic radiation error"
+          for i in $(seq 1 200); do
+            echo "ERROR $i: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           done
           echo "This step always passes."
 
@@ -35,7 +35,6 @@ jobs:
           echo "This runs even after failure"
           echo "Testing log parsing behavior"
 
-
   job2:
     runs-on: ubuntu-latest
 
@@ -44,7 +43,7 @@ jobs:
 
       - name: Another Hallucination Step
         run: |
-          for i in {1..150}; do
+          for i in $(seq 1 150); do
             echo "Random CI noise line $i: generating misleading stack traces and fake warnings..."
           done
 
@@ -59,7 +58,6 @@ jobs:
           echo "  File \"test.py\", line 10, in <module>"
           echo "ValueError: Something went terribly wrong"
           exit 1
-
 
   job3:
     runs-on: ubuntu-latest
