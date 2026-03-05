@@ -9,6 +9,10 @@ permissions:
   issues: write
   pull-requests: read
 
+concurrency:
+  group: bot-autoassign-pr-link-${{ github.repository }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   auto-assign-issue:
     runs-on: ubuntu-latest

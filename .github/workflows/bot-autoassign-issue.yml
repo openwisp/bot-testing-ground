@@ -8,6 +8,10 @@ permissions:
   contents: read
   issues: write
 
+concurrency:
+  group: bot-autoassign-issue-${{ github.repository }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
 jobs:
   respond-to-assign-request:
     runs-on: ubuntu-latest
