@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "Starting massive hallucination output..."
           for i in {1..200}; do
-            echo "ERROR $i: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            echo "ERROR $i: cosmic radiation error"
           done
           echo "This step always passes."
 
