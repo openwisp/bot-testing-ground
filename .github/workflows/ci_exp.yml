@@ -2,38 +2,70 @@ name: CI Experiment
 
 on:
   pull_request:
-    paths:
-      - 'ci_exp/**' 
-
   push:
     branches:
-      - master
       - main
-    paths:
-      - 'ci_exp/**'
+      - master
 
 jobs:
-  test:
+
+  job1:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Simulate OpenWISP checkcommit failure
+      - name: Large Hallucinating Step
         run: |
-          echo "ERROR: checkcommit failed: No capital letter after prefix. Message: '[qa] updated python script.'"
+          echo "Starting massive hallucination output..."
+          for i in {1..200}; do
+            echo "ERROR $i: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          done
+          echo "This step always passes."
+
+      - name: Intentional Failure
+        run: |
+          echo "Simulated failure: checkcommit violation"
+          echo "ERROR: checkcommit failed: No capital letter after prefix."
           exit 1
-      
-      - name: Set up Python
+
+      - name: Post Failure Step
+        if: always()
+        run: |
+          echo "This runs even after failure"
+          echo "Testing log parsing behavior"
+
+
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Another Hallucination Step
+        run: |
+          for i in {1..150}; do
+            echo "Random CI noise line $i: generating misleading stack traces and fake warnings..."
+          done
+
+      - name: Python Setup
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: Install QA Tools
-        run: pip install black flake8
+      - name: Fake Python Error
+        run: |
+          echo "Traceback (most recent call last):"
+          echo "  File \"test.py\", line 10, in <module>"
+          echo "ValueError: Something went terribly wrong"
+          exit 1
 
-      - name: Run QA Checks
-        run: python ci_exp/qa.py
 
-      - name: Run Broken Script
-        if: always()
-        run: python ci_exp/test_file.py
+  job3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Successful Job
+        run: |
+          echo "This job succeeds"
+          echo "Used to verify that only failed jobs are parsed"
