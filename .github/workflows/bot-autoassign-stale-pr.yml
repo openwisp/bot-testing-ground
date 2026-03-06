@@ -30,9 +30,7 @@ jobs:
         with:
           repository: Eeshu-Yadav/openwisp-utils
           ref: issues/571-automate-assigning-unassigning-issues
-          sparse-checkout: |
-            .github/actions/bot-autoassign
-          sparse-checkout-cone-mode: false
+          path: openwisp-utils
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -40,12 +38,12 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install PyGithub
+        run: pip install -e openwisp-utils/.[github_actions]
 
       - name: Run stale PR bot
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           REPOSITORY: ${{ github.repository }}
         run: >
-          python .github/actions/bot-autoassign/__main__.py
+          python openwisp-utils/.github/actions/bot-autoassign/__main__.py
           stale_pr
