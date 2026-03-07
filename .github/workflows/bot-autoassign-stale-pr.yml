@@ -25,12 +25,8 @@ jobs:
           app-id: ${{ secrets.OPENWISP_BOT_APP_ID }}
           private-key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
 
-      - name: Checkout openwisp-utils
+      - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          repository: Eeshu-Yadav/openwisp-utils
-          ref: issues/571-automate-assigning-unassigning-issues
-          path: openwisp-utils
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -38,12 +34,14 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install -e openwisp-utils/.[github_actions]
+        run: pip install -e .[github_actions]
 
       - name: Run stale PR bot
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          PYTHONPATH: .github/actions
         run: >
-          python openwisp-utils/.github/actions/bot-autoassign/__main__.py
+          python -m bot_autoassign
           stale_pr
