@@ -18,7 +18,7 @@ concurrency:
 jobs:
   reassign-on-reopen:
     if: github.event_name == 'pull_request_target' && github.event.action == 'reopened'
-    uses: openwisp/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/reusable-autoassign-workflow
+    uses: Eeshu-Yadav/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/reusable-autoassign-workflow
     with:
       bot_command: pr_reopen
     secrets:
@@ -30,7 +30,7 @@ jobs:
       github.event_name == 'issue_comment' &&
       github.event.issue.pull_request &&
       github.event.issue.user.login == github.event.comment.user.login
-    uses: openwisp/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/reusable-autoassign-workflow
+    uses: Eeshu-Yadav/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/reusable-autoassign-workflow
     with:
       bot_command: pr_reopen
     secrets:
