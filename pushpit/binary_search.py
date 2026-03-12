@@ -23,11 +23,9 @@ def binary_search(arr, target):
     
     return -1
 
-
 if __name__ == "__main__":
     numbers = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
     target = 7
-    
     result = binary_search(numbers, target)
     
     if result != -1:
