@@ -23,11 +23,19 @@ def binary_search(arr, target):
     
     return -1
 
+def print_number(num):
+    """
+    Print the given number.
+    
+    Args:
+        num: The number to print
+    """
+    print(f"The number is: {num}")
 
 if __name__ == "__main__":
     numbers = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
     target = 7
-    
+    print_number(target)
     result = binary_search(numbers, target)
     
     if result != -1:
