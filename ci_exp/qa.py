@@ -2,7 +2,7 @@ import subprocess
 import sys
 import shutil
 
-TARGET = "file.py"  
+TARGET = "ci_exp/file.py"  
 
 def run_command(command, name):
     if not shutil.which(command.split()[0]):
