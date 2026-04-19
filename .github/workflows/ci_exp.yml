@@ -15,25 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Large Hallucinating Step
+      - name: Simulated Transient Error
         run: |
-          echo "Starting massive hallucination output..."
-          for i in $(seq 1 200); do
-            echo "ERROR $i: Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          done
-          echo "This step always passes."
-
-      - name: Intentional Failure
-        run: |
-          echo "Simulated failure: checkcommit violation"
-          echo "ERROR: checkcommit failed: No capital letter after prefix."
+          echo "##[group]Test Setup"
+          echo "Setting up Selenium WebDriver..."
+          echo "Connecting to Marionette..."
+          echo "##[error]selenium.common.exceptions.InvalidSessionIdException: Message: Session is not active"
+          echo "##[error]NS_ERROR_CONNECTION_REFUSED"
+          echo "##[error]Connection reset by peer"
           exit 1
-
-      - name: Post Failure Step
-        if: always()
-        run: |
-          echo "This runs even after failure"
-          echo "Testing log parsing behavior"
 
   job2:
     runs-on: ubuntu-latest
@@ -41,29 +31,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Another Hallucination Step
+      - name: Another Transient Error
         run: |
-          for i in $(seq 1 150); do
-            echo "Random CI noise line $i: generating misleading stack traces and fake warnings..."
-          done
-
-      - name: Python Setup
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Fake Python Error
-        run: |
-          echo "Traceback (most recent call last):"
-          echo "  File \"test.py\", line 10, in <module>"
-          echo "ValueError: Something went terribly wrong"
+          echo "##[group]Database Connection"
+          echo "Connecting to PostgreSQL..."
+          echo "##[error]OperationalError: database is locked"
+          echo "Waiting for database..."
           exit 1
 
   job3:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Successful Job
+      - name: Network Transient Error
         run: |
-          echo "This job succeeds"
-          echo "Used to verify that only failed jobs are parsed"
+          echo "##[group]Package Installation"
+          echo "Installing dependencies..."
+          echo "##[error]ERROR: Could not install packages due to an OSError: HTTPSConnectionPool"
+          echo "##[error]Network is unreachable"
+          exit 1
