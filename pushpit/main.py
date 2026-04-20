@@ -31,6 +31,7 @@ def main():
         status = "even" if is_even(num) else "odd"
         print(f"{num} is {status}")
 
+print("This is a simple Python program demonstrating basic concepts.")
 
 if __name__ == "__main__":
     main()
