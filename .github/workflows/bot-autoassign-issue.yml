@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: Eeshu-Yadav/openwisp-utils
-          ref: issues/571-automate-assigning-unassigning-issues
+          ref: issues/649-fix-bot-assignment-silent-failure
           path: openwisp-utils
 
       - name: Set up Python
@@ -44,6 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
+          BOT_USERNAME: openwisp-companion
         run: >
           python openwisp-utils/.github/actions/bot-autoassign/__main__.py
           issue_assignment "$GITHUB_EVENT_PATH"
