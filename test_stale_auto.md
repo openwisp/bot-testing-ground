@@ -1,0 +1,1 @@
+# Auto Stale PR Demo\nThis PR is created to test the stale PR bot with automatic cron trigger.\nIt should be marked stale after 7 days of inactivity.\n
