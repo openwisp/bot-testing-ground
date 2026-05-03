@@ -8,30 +8,61 @@ on:
       - master
 
 jobs:
-
-  # CASE 1: Pure Transient. Should be completely forgiven.
-  job1-pure-transient:
+  job1-full-log-reproduction:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Simulated Transient Error
+      - name: Simulated Full OpenWISP Log
         run: |
-          echo "##[group]Test Setup"
-          echo "Setting up Selenium WebDriver..."
-          echo "##[error]selenium.common.exceptions.InvalidSessionIdException: Message: Session is not active"
-          exit 1
-
-  # CASE 2: Transient with Generic Traceback. 
-  # TESTS: The bot must forgive the "Traceback" and "ERROR:" because the transient marker is present.
-  job2-transient-with-traceback:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Network Transient Error
-        run: |
-          echo "##[group]Package Installation"
+          echo "Creating test database for alias 'default'..."
+          echo "Destroying old test database for alias 'default'..."
+          echo "Found 369 test(s)."
+          echo "System check identified no issues (0 silenced)."
+          echo "...................................................................../opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1665: RuntimeWarning: DateTimeField WifiSession.stop_time received a naive datetime (2023-08-24 19:46:00) while time zone support is active."
+          echo "  warnings.warn("
+          echo "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1665: RuntimeWarning: DateTimeField WifiSession.start_time received a naive datetime (2023-08-24 17:08:00) while time zone support is active."
+          echo "  warnings.warn("
+          echo "[]"
+          echo "--------------------------------------------------------------------------------"
+          echo "[Retry] Retrying \"openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click\", attempt 1/5. "
+          echo "--------------------------------------------------------------------------------"
+          echo "--------------------------------------------------------------------------------"
+          echo "[Retry] Retrying \"openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click\", attempt 5/5. "
+          echo "--------------------------------------------------------------------------------"
+          echo ""
+          echo "Summary of slow tests (>0.3s)"
+          echo "(openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_default_query)"
+          echo "  (0.31s) test_default_query"
+          echo "...................................................................................................."
+          echo ""
+          echo "======================================================================"
+          echo "ERROR: test_indoor_map_fragment_added_on_map_ready_without_node_click (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click) [Test URL fragment updates when switching floors on indoor map and device popup opened/closed]"
+          echo "----------------------------------------------------------------------"
           echo "Traceback (most recent call last):"
-          echo "  File \"urllib3/connectionpool.py\", line 703"
-          echo "##[error]ERROR: Could not install packages due to an OSError: HTTPSConnectionPool"
-          echo "##[error]Network is unreachable"
+          echo "  File \"/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py\", line 1250, in test_indoor_map_fragment_added_on_map_ready_without_node_click"
+          echo "    ).click()"
+          echo "      ^^^^^^^"
+          echo "  File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py\", line 114, in click"
+          echo "    self._execute(Command.CLICK_ELEMENT)"
+          echo "##[error]selenium.common.exceptions.ElementNotInteractableException: Message: Element <a class=\"leaflet-popup-close-button\" href=\"#close\"> could not be scrolled into view"
+          echo ""
+          echo "======================================================================"
+          echo "FAIL: test_indoor_map_fragment_added_on_map_ready_without_node_click (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click) [Test URL fragment with only nodeId param: state applied on new tab, popup not shown]"
+          echo "----------------------------------------------------------------------"
+          echo "Traceback (most recent call last):"
+          echo "  File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py\", line 283, in wait_for"
+          echo "    return WebDriverWait(driver, timeout).until("
+          echo "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+          echo "selenium.common.exceptions.TimeoutException: Message: "
+          echo ""
+          echo "During handling of the above exception, another exception occurred:"
+          echo ""
+          echo "Traceback (most recent call last):"
+          echo "  File \"/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py\", line 1284, in test_indoor_map_fragment_added_on_map_ready_without_node_click"
+          echo "    popup_not_displayed = self.wait_for_invisibility("
+          echo "                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+          echo "##[error]AssertionError: invisibility_of_element_located of \".njg-tooltip-inner\" failed: Message: "
+          echo ""
+          echo "Ran 369 tests in 361.607s"
+          echo "FAILED (failures=1, errors=1)"
           exit 1
