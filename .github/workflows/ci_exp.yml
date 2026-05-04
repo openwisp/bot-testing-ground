@@ -12,57 +12,403 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Simulated Full OpenWISP Log
         run: |
-          echo "Creating test database for alias 'default'..."
-          echo "Destroying old test database for alias 'default'..."
-          echo "Found 369 test(s)."
-          echo "System check identified no issues (0 silenced)."
-          echo "...................................................................../opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1665: RuntimeWarning: DateTimeField WifiSession.stop_time received a naive datetime (2023-08-24 19:46:00) while time zone support is active."
-          echo "  warnings.warn("
-          echo "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1665: RuntimeWarning: DateTimeField WifiSession.start_time received a naive datetime (2023-08-24 17:08:00) while time zone support is active."
-          echo "  warnings.warn("
-          echo "[]"
-          echo "--------------------------------------------------------------------------------"
-          echo "[Retry] Retrying \"openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click\", attempt 1/5. "
-          echo "--------------------------------------------------------------------------------"
-          echo "--------------------------------------------------------------------------------"
-          echo "[Retry] Retrying \"openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click\", attempt 5/5. "
-          echo "--------------------------------------------------------------------------------"
-          echo ""
-          echo "Summary of slow tests (>0.3s)"
-          echo "(openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_default_query)"
-          echo "  (0.31s) test_default_query"
-          echo "...................................................................................................."
-          echo ""
-          echo "======================================================================"
-          echo "ERROR: test_indoor_map_fragment_added_on_map_ready_without_node_click (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click) [Test URL fragment updates when switching floors on indoor map and device popup opened/closed]"
-          echo "----------------------------------------------------------------------"
-          echo "Traceback (most recent call last):"
-          echo "  File \"/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py\", line 1250, in test_indoor_map_fragment_added_on_map_ready_without_node_click"
-          echo "    ).click()"
-          echo "      ^^^^^^^"
-          echo "  File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py\", line 114, in click"
-          echo "    self._execute(Command.CLICK_ELEMENT)"
-          echo "##[error]selenium.common.exceptions.ElementNotInteractableException: Message: Element <a class=\"leaflet-popup-close-button\" href=\"#close\"> could not be scrolled into view"
-          echo ""
-          echo "======================================================================"
-          echo "FAIL: test_indoor_map_fragment_added_on_map_ready_without_node_click (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_indoor_map_fragment_added_on_map_ready_without_node_click) [Test URL fragment with only nodeId param: state applied on new tab, popup not shown]"
-          echo "----------------------------------------------------------------------"
-          echo "Traceback (most recent call last):"
-          echo "  File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py\", line 283, in wait_for"
-          echo "    return WebDriverWait(driver, timeout).until("
-          echo "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-          echo "selenium.common.exceptions.TimeoutException: Message: "
-          echo ""
-          echo "During handling of the above exception, another exception occurred:"
-          echo ""
-          echo "Traceback (most recent call last):"
-          echo "  File \"/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py\", line 1284, in test_indoor_map_fragment_added_on_map_ready_without_node_click"
-          echo "    popup_not_displayed = self.wait_for_invisibility("
-          echo "                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-          echo "##[error]AssertionError: invisibility_of_element_located of \".njg-tooltip-inner\" failed: Message: "
-          echo ""
-          echo "Ran 369 tests in 361.607s"
-          echo "FAILED (failures=1, errors=1)"
+          cat << 'EOF' > mock_log_output.txt
+          Found 367 test(s).
+          Creating test database for alias 'default'...
+          Destroying old test database for alias 'default'...
+          System check identified no issues (0 silenced).
+          ..................................................................../opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField WifiSession.stop_time received a naive datetime (2023-08-24 19:46:00) while time zone support is active.
+            warnings.warn(
+          /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField WifiSession.start_time received a naive datetime (2023-08-24 17:08:00) while time zone support is active.
+            warnings.warn(
+          .................................................................................................................................................................................................................................................................................................double free or corruption (fasttop)
+          Fatal Python error: Aborted
+
+          Thread 0x00007fb9e1ffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 322 in _close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 364 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 199 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 624 in close_if_unusable_or_obsolete
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/__init__.py", line 57 in close_old_connections
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 177 in send
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/http/response.py", line 0 in close
+
+          Current thread 0x00007fb9e2ffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 322 in _close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 364 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 199 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 624 in close_if_unusable_or_obsolete
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/__init__.py", line 57 in close_old_connections
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 177 in send
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/http/response.py", line 339 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/asgiref/sync.py", line 561 in thread_handler
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 59 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 93 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9aeffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9affff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9e90fe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9bdffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9bffff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9cdffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9ceffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9e3fff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9ebdff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9fe348b80 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/util.py", line 769 in untilConcludes
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/tcp.py", line 281 in writeSomeData
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/abstract.py", line 277 in doWrite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/asyncioreactor.py", line 138 in _readOrWrite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/context.py", line 82 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/context.py", line 117 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/log.py", line 80 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/log.py", line 96 in callWithLogger
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/events.py", line 88 in _run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 1999 in _run_once
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 645 in run_forever
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/asyncioreactor.py", line 253 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/daphne/server.py", line 150 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/daphne/testing.py", line 173 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/process.py", line 314 in _bootstrap
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/multiproc.py", line 51 in _bootstrap
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/popen_fork.py", line 71 in _launch
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/popen_fork.py", line 19 in __init__
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/context.py", line 282 in _Popen
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/context.py", line 224 in _Popen
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/process.py", line 121 in start
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/channels/testing/live.py", line 76 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/monitoring/tests/__init__.py", line 218 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/device/tests/__init__.py", line 30 in setUpClass
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py", line 95 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 77 in setUpClass
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 166 in _handleClassSetUp
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 114 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 84 in __call__
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/runner.py", line 240 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/test/runner.py", line 983 in run_suite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/test/runner.py", line 1061 in run_tests
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/commands/test.py", line 68 in handle
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/base.py", line 458 in execute
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/base.py", line 412 in run_from_argv
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/commands/test.py", line 24 in run_from_argv
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/__init__.py", line 436 in execute
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/__init__.py", line 442 in execute_from_command_line
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/runtests.py", line 21 in <module>
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/execfile.py", line 213 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 1042 in do_run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 853 in command_line
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 1163 in main
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/bin/coverage", line 6 in <module>
+
+          Extension modules: yaml._yaml, msgpack._cmsgpack, _brotli, zope.interface._zope_interface_coptimizations, _cffi_backend, _cbor2, charset_normalizer.md, charset_normalizer.cd, requests.packages.charset_normalizer.md, requests.packages.chardet.md, requests.packages.charset_normalizer.cd, requests.packages.chardet.cd, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, markupsafe._speedups, PIL._imaging, PIL._imagingmath (total: 23)
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
+
+          Summary of slow tests (>0.3s)
+
+          (openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_read_with_rp)
+            (0.41s) test_read_with_rp
+          (openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_retry_mechanism)
+            (6.24s) test_retry_mechanism
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_alert_settings_inline_post)
+            (0.66s) test_alert_settings_inline_post
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_check_alertsetting_inline)
+            (2.54s) test_check_alertsetting_inline
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_add_view)
+            (0.86s) test_device_add_view
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_admin)
+            (1.74s) test_device_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_admin_recover_button_visibility)
+            (0.33s) test_device_admin_recover_button_visibility
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_disabled_organization_admin)
+            (1.25s) test_device_disabled_organization_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_config_not_templates)
+            (0.42s) test_device_import_config_not_templates
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_empty_config)
+            (0.36s) test_device_import_empty_config
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_export_buttons)
+            (0.47s) test_device_import_export_buttons
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_missing_config)
+            (0.36s) test_device_import_missing_config
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_health_checks_list)
+            (2.51s) test_health_checks_list
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_bridge_admin)
+            (1.07s) test_interface_bridge_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_mobile_admin)
+            (1.01s) test_interface_mobile_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_properties_admin)
+            (0.95s) test_interface_properties_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_no_device_data)
+            (0.88s) test_no_device_data
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_remove_invalid_interface)
+            (0.92s) test_remove_invalid_interface
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data)
+            (1.98s) test_status_data
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data_contains_wifi_client_he_vht_ht_unknown)
+            (4.13s) test_status_data_contains_wifi_client_he_vht_ht_unknown
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data_contains_wifi_version)
+            (1.79s) test_status_data_contains_wifi_version
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_uuid_bug)
+            (1.12s) test_uuid_bug
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_wifi_clients_admin)
+            (0.96s) test_wifi_clients_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_wifisession_inline)
+            (2.24s) test_wifisession_inline
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_changelist_filters_and_multitenancy)
+            (1.14s) test_changelist_filters_and_multitenancy
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_dashboard_wifi_session_chart)
+            (0.44s) test_dashboard_wifi_session_chart
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_deleting_device_with_wifisessions)
+            (0.36s) test_deleting_device_with_wifisessions
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_wifi_client_he_vht_ht_unknown)
+            (0.93s) test_wifi_client_he_vht_ht_unknown
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_wifi_session_stop_time_formatting)
+            (0.52s) test_wifi_session_stop_time_formatting
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_create)
+            (0.41s) test_200_create
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_multiple_measurements)
+            (0.79s) test_200_multiple_measurements
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_no_date_supplied)
+            (0.58s) test_200_no_date_supplied
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_none)
+            (0.32s) test_200_none
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_traffic_counter_incremented)
+            (0.52s) test_200_traffic_counter_incremented
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_traffic_counter_reset)
+            (0.52s) test_200_traffic_counter_reset
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_5g_charts)
+            (0.58s) test_5g_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_auto_chart_disabled)
+            (0.49s) test_auto_chart_disabled
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_available_memory)
+            (0.98s) test_available_memory
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_cdma_charts)
+            (0.57s) test_cdma_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_activate_deactivate)
+            (0.82s) test_device_activate_deactivate
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_custom_date_metrics)
+            (1.96s) test_device_custom_date_metrics
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_metrics_received_signal)
+            (0.59s) test_device_metrics_received_signal
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_with_location)
+            (0.64s) test_device_with_location
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_evdo_charts)
+            (0.57s) test_evdo_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_garbage_interface_properties)
+            (0.45s) test_garbage_interface_properties
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_1d)
+            (1.13s) test_get_device_metrics_1d
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_200)
+            (2.16s) test_get_device_metrics_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_400_bad_timezone)
+            (0.40s) test_get_device_metrics_400_bad_timezone
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_csv)
+            (1.23s) test_get_device_metrics_csv
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_histogram_ignore_x)
+            (0.80s) test_get_device_metrics_histogram_ignore_x
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_list_200)
+            (0.68s) test_get_device_metrics_list_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_status_200)
+            (1.03s) test_get_device_status_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_gsm_charts)
+            (0.47s) test_gsm_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_missing_rx_bytes)
+            (0.38s) test_missing_rx_bytes
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_missing_tx_bytes)
+            (0.38s) test_missing_tx_bytes
+          ...
+          ======================================================================
+          ERROR: test_url_fragment_actions_on_indoor_map (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map)
+          ----------------------------------------------------------------------
+          Traceback (most recent call last):
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 695, in test_url_fragment_actions_on_indoor_map
+              self.login()
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 86, in login
+              super().login(username, password, driver)
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py", line 239, in login
+              driver.get(f"{self.live_server_url}/admin/login/")
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 466, in get
+              self.execute(Command.GET, {"url": url})
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 446, in execute
+              self.error_handler.check_response(response)
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+              raise exception_class(message, screen, stacktrace)
+          selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=connectionFailure&u=http%3A//localhost%3A38033/admin/login/&c=UTF-8&d=Firefox%20can%E2%80%99t%20establish%20a%20connection%20to%20the%20server%20at%20localhost%3A38033.&a=
+          Stacktrace:
+          RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+          WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:202:5
+          UnknownError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:961:5
+          checkReadyState@chrome://remote/content/marionette/navigate.sys.mjs:59:24
+          onNavigation@chrome://remote/content/marionette/navigate.sys.mjs:351:39
+          emit@resource://gre/modules/EventEmitter.sys.mjs:156:19
+          receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.sys.mjs:33:25
+
+
+          ----------------------------------------------------------------------
+          Ran 367 tests in 268.213s
+
+          FAILED (errors=1)
+          Destroying test database for alias 'default'...
+          EOF
+          
+          cat mock_log_output.txt
+          # Trigger workflow failure explicitly so the bot catches it
           exit 1
