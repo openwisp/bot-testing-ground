@@ -16,415 +16,399 @@ jobs:
       - name: Simulated Full OpenWISP Log
         run: |
           cat << 'EOF' > mock_log_output.txt
-          Found 107 test(s).
+          Found 367 test(s).
           Creating test database for alias 'default'...
-          Cloning test database for alias 'default'...
-          Cloning test database for alias 'default'...
-          Cloning test database for alias 'default'...
-          Cloning test database for alias 'default'...
+          Destroying old test database for alias 'default'...
           System check identified no issues (0 silenced).
-          .........................................................../opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/site-packages/django/contrib/admin/options.py:913: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'test_project.models.Book'> QuerySet.
-            return self.paginator(queryset, per_page, orphans, allow_empty_first_page)
-          ................................................
+          ..................................................................../opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField WifiSession.stop_time received a naive datetime (2023-08-24 19:46:00) while time zone support is active.
+            warnings.warn(
+          /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1595: RuntimeWarning: DateTimeField WifiSession.start_time received a naive datetime (2023-08-24 17:08:00) while time zone support is active.
+            warnings.warn(
+          .................................................................................................................................................................................................................................................................................................double free or corruption (fasttop)
+          Fatal Python error: Aborted
+
+          Thread 0x00007fb9e1ffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 322 in _close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 364 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 199 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 624 in close_if_unusable_or_obsolete
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/__init__.py", line 57 in close_old_connections
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 177 in send
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/http/response.py", line 0 in close
+
+          Current thread 0x00007fb9e2ffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 322 in _close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 364 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 199 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/utils/asyncio.py", line 26 in inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/backends/base/base.py", line 624 in close_if_unusable_or_obsolete
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/db/__init__.py", line 57 in close_old_connections
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 177 in send
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/http/response.py", line 339 in close
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/asgiref/sync.py", line 561 in thread_handler
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 59 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 93 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9aeffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9affff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9e90fe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9bdffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9bffff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9cdffd6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9ceffe6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9e3fff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9ebdff6c0 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/concurrent/futures/thread.py", line 90 in _worker
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1012 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+          Thread 0x00007fb9fe348b80 (most recent call first):
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/util.py", line 769 in untilConcludes
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/tcp.py", line 281 in writeSomeData
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/abstract.py", line 277 in doWrite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/asyncioreactor.py", line 138 in _readOrWrite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/context.py", line 82 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/context.py", line 117 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/log.py", line 80 in callWithContext
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/python/log.py", line 96 in callWithLogger
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/events.py", line 88 in _run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 1999 in _run_once
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 645 in run_forever
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/twisted/internet/asyncioreactor.py", line 253 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/daphne/server.py", line 150 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/daphne/testing.py", line 173 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/process.py", line 314 in _bootstrap
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/multiproc.py", line 51 in _bootstrap
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/popen_fork.py", line 71 in _launch
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/popen_fork.py", line 19 in __init__
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/context.py", line 282 in _Popen
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/context.py", line 224 in _Popen
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/multiprocessing/process.py", line 121 in start
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/channels/testing/live.py", line 76 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/monitoring/tests/__init__.py", line 218 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/device/tests/__init__.py", line 30 in setUpClass
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py", line 95 in setUpClass
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 77 in setUpClass
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 166 in _handleClassSetUp
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 114 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/suite.py", line 84 in __call__
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/runner.py", line 240 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/test/runner.py", line 983 in run_suite
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/test/runner.py", line 1061 in run_tests
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/commands/test.py", line 68 in handle
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/base.py", line 458 in execute
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/base.py", line 412 in run_from_argv
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/commands/test.py", line 24 in run_from_argv
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/__init__.py", line 436 in execute
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/django/core/management/__init__.py", line 442 in execute_from_command_line
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/runtests.py", line 21 in <module>
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/execfile.py", line 213 in run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 1042 in do_run
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 853 in command_line
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/coverage/cmdline.py", line 1163 in main
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/bin/coverage", line 6 in <module>
+
+          Extension modules: yaml._yaml, msgpack._cmsgpack, _brotli, zope.interface._zope_interface_coptimizations, _cffi_backend, _cbor2, charset_normalizer.md, charset_normalizer.cd, requests.packages.charset_normalizer.md, requests.packages.chardet.md, requests.packages.charset_normalizer.cd, requests.packages.chardet.cd, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, markupsafe._speedups, PIL._imaging, PIL._imagingmath (total: 23)
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_infinite_scroll_on_popup", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_mobile_location_updates_on_dashboard_map_with_org_isolation", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_opening_full_page_map_view_from_device_detail_page", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_switching_floorplan_in_fullscreen_mode", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_geo_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 1/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 2/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 3/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 4/5. 
+          --------------------------------------------------------------------------------
+          --------------------------------------------------------------------------------
+          [Retry] Retrying "openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map", attempt 5/5. 
+          --------------------------------------------------------------------------------
 
           Summary of slow tests (>0.3s)
 
-
-          Total slow tests detected: 0
+          (openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_read_with_rp)
+            (0.41s) test_read_with_rp
+          (openwisp_monitoring.db.backends.influxdb.tests.TestDatabaseClient.test_retry_mechanism)
+            (6.24s) test_retry_mechanism
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_alert_settings_inline_post)
+            (0.66s) test_alert_settings_inline_post
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_check_alertsetting_inline)
+            (2.54s) test_check_alertsetting_inline
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_add_view)
+            (0.86s) test_device_add_view
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_admin)
+            (1.74s) test_device_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_admin_recover_button_visibility)
+            (0.33s) test_device_admin_recover_button_visibility
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_disabled_organization_admin)
+            (1.25s) test_device_disabled_organization_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_config_not_templates)
+            (0.42s) test_device_import_config_not_templates
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_empty_config)
+            (0.36s) test_device_import_empty_config
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_export_buttons)
+            (0.47s) test_device_import_export_buttons
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_device_import_missing_config)
+            (0.36s) test_device_import_missing_config
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_health_checks_list)
+            (2.51s) test_health_checks_list
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_bridge_admin)
+            (1.07s) test_interface_bridge_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_mobile_admin)
+            (1.01s) test_interface_mobile_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_interface_properties_admin)
+            (0.95s) test_interface_properties_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_no_device_data)
+            (0.88s) test_no_device_data
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_remove_invalid_interface)
+            (0.92s) test_remove_invalid_interface
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data)
+            (1.98s) test_status_data
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data_contains_wifi_client_he_vht_ht_unknown)
+            (4.13s) test_status_data_contains_wifi_client_he_vht_ht_unknown
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_status_data_contains_wifi_version)
+            (1.79s) test_status_data_contains_wifi_version
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_uuid_bug)
+            (1.12s) test_uuid_bug
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_wifi_clients_admin)
+            (0.96s) test_wifi_clients_admin
+          (openwisp_monitoring.device.tests.test_admin.TestAdmin.test_wifisession_inline)
+            (2.24s) test_wifisession_inline
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_changelist_filters_and_multitenancy)
+            (1.14s) test_changelist_filters_and_multitenancy
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_dashboard_wifi_session_chart)
+            (0.44s) test_dashboard_wifi_session_chart
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_deleting_device_with_wifisessions)
+            (0.36s) test_deleting_device_with_wifisessions
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_wifi_client_he_vht_ht_unknown)
+            (0.93s) test_wifi_client_he_vht_ht_unknown
+          (openwisp_monitoring.device.tests.test_admin.TestWifiSessionAdmin.test_wifi_session_stop_time_formatting)
+            (0.52s) test_wifi_session_stop_time_formatting
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_create)
+            (0.41s) test_200_create
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_multiple_measurements)
+            (0.79s) test_200_multiple_measurements
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_no_date_supplied)
+            (0.58s) test_200_no_date_supplied
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_none)
+            (0.32s) test_200_none
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_traffic_counter_incremented)
+            (0.52s) test_200_traffic_counter_incremented
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_200_traffic_counter_reset)
+            (0.52s) test_200_traffic_counter_reset
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_5g_charts)
+            (0.58s) test_5g_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_auto_chart_disabled)
+            (0.49s) test_auto_chart_disabled
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_available_memory)
+            (0.98s) test_available_memory
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_cdma_charts)
+            (0.57s) test_cdma_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_activate_deactivate)
+            (0.82s) test_device_activate_deactivate
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_custom_date_metrics)
+            (1.96s) test_device_custom_date_metrics
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_metrics_received_signal)
+            (0.59s) test_device_metrics_received_signal
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_device_with_location)
+            (0.64s) test_device_with_location
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_evdo_charts)
+            (0.57s) test_evdo_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_garbage_interface_properties)
+            (0.45s) test_garbage_interface_properties
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_1d)
+            (1.13s) test_get_device_metrics_1d
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_200)
+            (2.16s) test_get_device_metrics_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_400_bad_timezone)
+            (0.40s) test_get_device_metrics_400_bad_timezone
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_csv)
+            (1.23s) test_get_device_metrics_csv
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_histogram_ignore_x)
+            (0.80s) test_get_device_metrics_histogram_ignore_x
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_metrics_list_200)
+            (0.68s) test_get_device_metrics_list_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_get_device_status_200)
+            (1.03s) test_get_device_status_200
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_gsm_charts)
+            (0.47s) test_gsm_charts
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_missing_rx_bytes)
+            (0.38s) test_missing_rx_bytes
+          (openwisp_monitoring.device.tests.test_api.TestDeviceApi.test_missing_tx_bytes)
+            (0.38s) test_missing_tx_bytes
+          ...
+          ======================================================================
+          ERROR: test_url_fragment_actions_on_indoor_map (openwisp_monitoring.tests.test_selenium.TestDashboardMap.test_url_fragment_actions_on_indoor_map)
           ----------------------------------------------------------------------
-          Ran 107 tests in 10.067s
+          Traceback (most recent call last):
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 695, in test_url_fragment_actions_on_indoor_map
+              self.login()
+            File "/home/runner/work/openwisp-monitoring/openwisp-monitoring/openwisp_monitoring/tests/test_selenium.py", line 86, in login
+              super().login(username, password, driver)
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/openwisp_utils/tests/selenium.py", line 239, in login
+              driver.get(f"{self.live_server_url}/admin/login/")
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 466, in get
+              self.execute(Command.GET, {"url": url})
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 446, in execute
+              self.error_handler.check_response(response)
+            File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+              raise exception_class(message, screen, stacktrace)
+          selenium.common.exceptions.WebDriverException: Message: Reached error page: about:neterror?e=connectionFailure&u=http%3A//localhost%3A38033/admin/login/&c=UTF-8&d=Firefox%20can%E2%80%99t%20establish%20a%20connection%20to%20the%20server%20at%20localhost%3A38033.&a=
+          Stacktrace:
+          RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+          WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:202:5
+          UnknownError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:961:5
+          checkReadyState@chrome://remote/content/marionette/navigate.sys.mjs:59:24
+          onNavigation@chrome://remote/content/marionette/navigate.sys.mjs:351:39
+          emit@resource://gre/modules/EventEmitter.sys.mjs:156:19
+          receiveMessage@chrome://remote/content/marionette/actors/MarionetteEventsParent.sys.mjs:33:25
 
-          OK
+
+          ----------------------------------------------------------------------
+          Ran 367 tests in 268.213s
+
+          FAILED (errors=1)
           Destroying test database for alias 'default'...
-          Destroying test database for alias 'default'...
-          Destroying test database for alias 'default'...
-          Destroying test database for alias 'default'...
-          Destroying test database for alias 'default'...
-          ============================= test session starts ==============================
-          platform linux -- Python 3.10.20, pytest-9.0.3, pluggy-1.6.0
-          rootdir: /home/runner/work/openwisp-utils/openwisp-utils
-          plugins: mock-3.15.1, anyio-4.13.0
-          collected 360 items
-
-          openwisp_utils/releaser/tests/test_ai_summary.py ........                [  2%]
-          openwisp_utils/releaser/tests/test_changelog.py ...................      [  7%]
-          openwisp_utils/releaser/tests/test_commitizen_rules.py ................. [ 12%]
-          ....                                                                     [ 13%]
-          openwisp_utils/releaser/tests/test_config.py ........................... [ 20%]
-          .....                                                                    [ 22%]
-          openwisp_utils/releaser/tests/test_github.py .......                     [ 24%]
-          openwisp_utils/releaser/tests/test_release.py ......................     [ 30%]
-          openwisp_utils/releaser/tests/test_utils.py ................             [ 34%]
-          openwisp_utils/releaser/tests/test_version_bumping.py .................. [ 39%]
-          ......                                                                   [ 41%]
-          .github/actions/bot-ci-failure/test_analyze_failure.py ................. [ 46%]
-          .......................................FFF....FF.F                       [ 60%]
-          .github/actions/bot-changelog-generator/test_generate_changelog.py ..... [ 61%]
-          ...................................................                      [ 75%]
-          .github/actions/bot-autoassign/tests/test_issue_assignment_bot.py ...... [ 77%]
-          .............................................                            [ 89%]
-          .github/actions/bot-autoassign/tests/test_pr_reopen_bot.py ............. [ 93%]
-                                                                                   [ 93%]
-          .github/actions/bot-autoassign/tests/test_stale_pr_bot.py .............. [ 97%]
-          ..........                                                               [100%]
-
-          =================================== FAILURES ===================================
-          ____________________ TestMain.test_fails_format_validation _____________________
-
-          self = <MagicMock name='print' id='140516266795808'>
-          args = ('::warning::LLM output failed format validation; skipping comment.',)
-          kwargs = {'file': <_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>}
-          msg = 'Expected \'print\' to be called once. Called 2 times.\nCalls: [call(\'::notice::Retry mode=llm transient_only=False s...t.\', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode=\'rb+\' closefd=True>" mode=\'r+\' encoding=\'utf-8\'>)].'
-
-              def assert_called_once_with(self, /, *args, **kwargs):
-                  """assert that the mock was called exactly once and that that call was
-                  with the specified arguments."""
-                  if not self.call_count == 1:
-                      msg = ("Expected '%s' to be called once. Called %s times.%s"
-                             % (self._mock_name or 'mock',
-                                self.call_count,
-                                self._calls_repr()))
-          >           raise AssertionError(msg)
-          E           AssertionError: Expected 'print' to be called once. Called 2 times.
-          E           Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E            call('::warning::LLM output failed format validation; skipping comment.', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          /opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/unittest/mock.py:940: AssertionError
-
-          During handling of the above exception, another exception occurred:
-
-          self = <test_analyze_failure.TestMain testMethod=test_fails_format_validation>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516266796288'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516268141264'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516268137424'>
-          mock_genai = <MagicMock name='genai' id='140516270004816'>
-          mock_print = <MagicMock name='print' id='140516266795808'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(
-                  os.environ,
-                  {"GEMINI_API_KEY": "fake_key", "PR_AUTHOR": "test", "COMMIT_SHA": "abc"},
-              )
-              def test_fails_format_validation(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Fake error log", True, False)
-                  mock_repo.return_value = "Code"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_response = MagicMock()
-                  mock_response.text = "Here is how to fix the bug."
-                  mock_client.models.generate_content.return_value = mock_response
-                  mock_genai.Client.return_value = mock_client
-                  with self.assertRaises(SystemExit) as context:
-                      main()
-                  self.assertEqual(context.exception.code, 0)
-          >       mock_print.assert_called_once_with(
-                      "::warning::LLM output failed format validation; skipping comment.",
-                      file=sys.stderr,
-                  )
-          E       AssertionError: Expected 'print' to be called once. Called 2 times.
-          E       Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E        call('::warning::LLM output failed format validation; skipping comment.', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:694: AssertionError
-          _____________________ TestMain.test_handles_api_exception ______________________
-
-          self = <MagicMock name='print' id='140516267118304'>
-          args = ('::warning::API Error (Max retries reached or fatal error): Quota Exceeded',)
-          kwargs = {'file': <_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>}
-          msg = 'Expected \'print\' to be called once. Called 2 times.\nCalls: [call(\'::notice::Retry mode=llm transient_only=False s...ed\', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode=\'rb+\' closefd=True>" mode=\'r+\' encoding=\'utf-8\'>)].'
-
-              def assert_called_once_with(self, /, *args, **kwargs):
-                  """assert that the mock was called exactly once and that that call was
-                  with the specified arguments."""
-                  if not self.call_count == 1:
-                      msg = ("Expected '%s' to be called once. Called %s times.%s"
-                             % (self._mock_name or 'mock',
-                                self.call_count,
-                                self._calls_repr()))
-          >           raise AssertionError(msg)
-          E           AssertionError: Expected 'print' to be called once. Called 2 times.
-          E           Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E            call('::warning::API Error (Max retries reached or fatal error): Quota Exceeded', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          /opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/unittest/mock.py:940: AssertionError
-
-          During handling of the above exception, another exception occurred:
-
-          self = <test_analyze_failure.TestMain testMethod=test_handles_api_exception>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516267170624'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516267175568'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516266756656'>
-          mock_genai = <MagicMock name='genai' id='140516267126752'>
-          mock_print = <MagicMock name='print' id='140516267118304'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(os.environ, {"GEMINI_API_KEY": "fake_key"})
-              def test_handles_api_exception(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Error log", True, False)
-                  mock_repo.return_value = "Code"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_client.models.generate_content.side_effect = Exception("Quota Exceeded")
-                  mock_genai.Client.return_value = mock_client
-                  with self.assertRaises(SystemExit):
-                      main()
-          >       mock_print.assert_called_once_with(
-                      "::warning::API Error (Max retries reached or fatal error): Quota Exceeded",
-                      file=sys.stderr,
-                  )
-          E       AssertionError: Expected 'print' to be called once. Called 2 times.
-          E       Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E        call('::warning::API Error (Max retries reached or fatal error): Quota Exceeded', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:740: AssertionError
-          ___________________ TestMain.test_handles_empty_api_response ___________________
-
-          self = <MagicMock name='print' id='140516272945952'>
-          args = ('::warning::Generation returned an empty response; skipping report.',)
-          kwargs = {'file': <_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>}
-          msg = 'Expected \'print\' to be called once. Called 2 times.\nCalls: [call(\'::notice::Retry mode=llm transient_only=False s...t.\', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode=\'rb+\' closefd=True>" mode=\'r+\' encoding=\'utf-8\'>)].'
-
-              def assert_called_once_with(self, /, *args, **kwargs):
-                  """assert that the mock was called exactly once and that that call was
-                  with the specified arguments."""
-                  if not self.call_count == 1:
-                      msg = ("Expected '%s' to be called once. Called %s times.%s"
-                             % (self._mock_name or 'mock',
-                                self.call_count,
-                                self._calls_repr()))
-          >           raise AssertionError(msg)
-          E           AssertionError: Expected 'print' to be called once. Called 2 times.
-          E           Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E            call('::warning::Generation returned an empty response; skipping report.', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          /opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/unittest/mock.py:940: AssertionError
-
-          During handling of the above exception, another exception occurred:
-
-          self = <test_analyze_failure.TestMain testMethod=test_handles_empty_api_response>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516566899232'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516273594016'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516273611744'>
-          mock_genai = <MagicMock name='genai' id='140516273618656'>
-          mock_print = <MagicMock name='print' id='140516272945952'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(os.environ, {"GEMINI_API_KEY": "fake_key"})
-              def test_handles_empty_api_response(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Error log", True, False)
-                  mock_repo.return_value = "Code"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_response = MagicMock()
-                  mock_response.text = "   \n  "
-                  mock_client.models.generate_content.return_value = mock_response
-                  mock_genai.Client.return_value = mock_client
-                  with self.assertRaises(SystemExit):
-                      main()
-          >       mock_print.assert_called_once_with(
-                      "::warning::Generation returned an empty response; skipping report.",
-                      file=sys.stderr,
-                  )
-          E       AssertionError: Expected 'print' to be called once. Called 2 times.
-          E       Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E        call('::warning::Generation returned an empty response; skipping report.', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>)].
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:718: AssertionError
-          __________________ TestMain.test_strips_wrapping_code_fences ___________________
-
-          self = <MagicMock name='print' id='140516270855440'>
-          args = ('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.',)
-          kwargs = {}
-          msg = "Expected 'print' to be called once. Called 2 times.\nCalls: [call('::notice::Retry mode=llm transient_only=False shou...encoding='utf-8'>),\n call('### Test Failed\\nHello @testuser\\n*(Analysis for commit abc1234)*\\nHere is the fix.')]."
-
-              def assert_called_once_with(self, /, *args, **kwargs):
-                  """assert that the mock was called exactly once and that that call was
-                  with the specified arguments."""
-                  if not self.call_count == 1:
-                      msg = ("Expected '%s' to be called once. Called %s times.%s"
-                             % (self._mock_name or 'mock',
-                                self.call_count,
-                                self._calls_repr()))
-          >           raise AssertionError(msg)
-          E           AssertionError: Expected 'print' to be called once. Called 2 times.
-          E           Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E            call('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.')].
-
-          /opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/unittest/mock.py:940: AssertionError
-
-          During handling of the above exception, another exception occurred:
-
-          self = <test_analyze_failure.TestMain testMethod=test_strips_wrapping_code_fences>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516270140208'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516264255808'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516268550960'>
-          mock_genai = <MagicMock name='genai' id='140516268546928'>
-          mock_print = <MagicMock name='print' id='140516270855440'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(
-                  os.environ,
-                  {
-                      "GEMINI_API_KEY": "fake_key",
-                      "PR_AUTHOR": "testuser",
-                      "COMMIT_SHA": "abc1234",
-                  },
-              )
-              def test_strips_wrapping_code_fences(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Fake error log", True, False)
-                  mock_repo.return_value = "<file path='test.py'>code</file>"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_response = MagicMock()
-                  mock_response.text = (
-                      "```markdown\n"
-                      "### Test Failed\n"
-                      "Hello @testuser\n"
-                      "*(Analysis for commit abc1234)*\n"
-                      "Here is the fix.\n"
-                      "```"
-                  )
-                  mock_client.models.generate_content.return_value = mock_response
-                  mock_genai.Client.return_value = mock_client
-                  main()
-          >       mock_print.assert_called_once_with(
-                      "### Test Failed\n"
-                      "Hello @testuser\n"
-                      "*(Analysis for commit abc1234)*\n"
-                      "Here is the fix."
-                  )
-          E       AssertionError: Expected 'print' to be called once. Called 2 times.
-          E       Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E        call('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.')].
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:637: AssertionError
-          ______________ TestMain.test_successful_api_call_prints_response _______________
-
-          self = <MagicMock name='print' id='140516272919296'>
-          args = ('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.',)
-          kwargs = {}
-          msg = "Expected 'print' to be called once. Called 2 times.\nCalls: [call('::notice::Retry mode=llm transient_only=False shou...encoding='utf-8'>),\n call('### Test Failed\\nHello @testuser\\n*(Analysis for commit abc1234)*\\nHere is the fix.')]."
-
-              def assert_called_once_with(self, /, *args, **kwargs):
-                  """assert that the mock was called exactly once and that that call was
-                  with the specified arguments."""
-                  if not self.call_count == 1:
-                      msg = ("Expected '%s' to be called once. Called %s times.%s"
-                             % (self._mock_name or 'mock',
-                                self.call_count,
-                                self._calls_repr()))
-          >           raise AssertionError(msg)
-          E           AssertionError: Expected 'print' to be called once. Called 2 times.
-          E           Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E            call('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.')].
-
-          /opt/hostedtoolcache/Python/3.10.20/x64/lib/python3.10/unittest/mock.py:940: AssertionError
-
-          During handling of the above exception, another exception occurred:
-
-          self = <test_analyze_failure.TestMain testMethod=test_successful_api_call_prints_response>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516274637072'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516274650128'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516274575232'>
-          mock_genai = <MagicMock name='genai' id='140516274584976'>
-          mock_print = <MagicMock name='print' id='140516272919296'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(
-                  os.environ,
-                  {"GEMINI_API_KEY": "fake_key", "PR_AUTHOR": "test", "COMMIT_SHA": "abc"},
-              )
-              def test_successful_api_call_prints_response(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Fake error log", True, False)
-                  mock_repo.return_value = "Code"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_response = MagicMock()
-                  mock_response.text = (
-                      "### Test Failed\n"
-                      "Hello @testuser\n"
-                      "*(Analysis for commit abc1234)*\n"
-                      "Here is the fix."
-                  )
-                  mock_client.models.generate_content.return_value = mock_response
-                  mock_genai.Client.return_value = mock_client
-                  main()
-          >       mock_print.assert_called_once_with(
-                      "### Test Failed\n"
-                      "Hello @testuser\n"
-                      "*(Analysis for commit abc1234)*\n"
-                      "Here is the fix."
-                  )
-          E       AssertionError: Expected 'print' to be called once. Called 2 times.
-          E       Calls: [call('::notice::Retry mode=llm transient_only=False should_retry=False', file=<_io.TextIOWrapper name="<_io.FileIO name=10 mode='rb+' closefd=True>" mode='r+' encoding='utf-8'>),
-          E        call('### Test Failed\nHello @testuser\n*(Analysis for commit abc1234)*\nHere is the fix.')].
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:598: AssertionError
-          __________________ TestMain.test_truncates_large_api_response __________________
-
-          self = <test_analyze_failure.TestMain testMethod=test_truncates_large_api_response>
-          mock_retry = <MagicMock name='_should_retry_ci' id='140516270935056'>
-          mock_repo = <MagicMock name='get_repo_context' id='140516266759248'>
-          mock_logs = <MagicMock name='get_error_logs' id='140516267114944'>
-          mock_genai = <MagicMock name='genai' id='140516267121472'>
-          mock_print = <MagicMock name='print' id='140516273610592'>
-
-              @patch("builtins.print")
-              @patch("analyze_failure.genai")
-              @patch("analyze_failure.get_error_logs")
-              @patch("analyze_failure.get_repo_context")
-              @patch("analyze_failure._should_retry_ci")
-              @patch.dict(
-                  os.environ,
-                  {"GEMINI_API_KEY": "fake_key", "PR_AUTHOR": "test", "COMMIT_SHA": "abc"},
-              )
-              def test_truncates_large_api_response(
-                  self, mock_retry, mock_repo, mock_logs, mock_genai, mock_print
-              ):
-                  mock_logs.return_value = ("Fake error log", True, False)
-                  mock_repo.return_value = "Code"
-                  mock_retry.return_value = False
-                  mock_client = MagicMock()
-                  mock_response = MagicMock()
-                  long_response = "*(Analysis for commit abc1234)*\n" + ("x" * 10000)
-                  mock_response.text = long_response
-                  mock_client.models.generate_content.return_value = mock_response
-                  mock_genai.Client.return_value = mock_client
-                  main()
-          >       self.assertEqual(mock_print.call_count, 1)
-          E       AssertionError: 2 != 1
-
-          .github/actions/bot-ci-failure/test_analyze_failure.py:767: AssertionError
           EOF
           
+          cat mock_log_output.txt
+          # Trigger workflow failure explicitly so the bot catches it
           exit 1
