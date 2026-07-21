@@ -1,1 +1,1 @@
-Testing bot for invalid PR with invalid issue link .
+Testing bot's updated comment.
