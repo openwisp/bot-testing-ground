@@ -12,11 +12,11 @@ concurrency:
 jobs:
   auto-assign-issue:
     if: github.event.action != 'closed' || github.event.pull_request.merged == false
-    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/709-flag-invalid-prs
+    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@fix/732-private-org-members
     with:
       bot_command: issue_assignment
       openwisp_utils_repo: prathmeshkulkarni-coder/openwisp-utils
-      openwisp_utils_ref: feature/709-flag-invalid-prs
+      openwisp_utils_ref: fix/732-private-org-members
     secrets:
       OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
