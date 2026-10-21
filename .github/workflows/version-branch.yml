@@ -1,0 +1,28 @@
+name: Replicate Commits to Version Branch
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  replicate-version-branches:
+    if: github.repository == 'openwisp/bot-testing-ground'
+    name: Replicate ${{ matrix.description }} version branch
+    strategy:
+      matrix:
+        include:
+          - description: package-root fixture
+            module_name: version_fixture_package
+          - description: version-submodule fixture
+            module_name: version_fixture_submodule.version
+    uses: openwisp/openwisp-utils/.github/workflows/reusable-version-branch.yml@version-backport
+    with:
+      module_name: ${{ matrix.module_name }}
+      install_package: true
+    secrets:
+      app_id: ${{ secrets.OPENWISP_BOT_APP_ID }}
+      private_key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
