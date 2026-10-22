@@ -23,6 +23,6 @@ jobs:
     with:
       module_name: ${{ matrix.module_name }}
       install_package: true
+      client_id: ${{ vars.OPENWISP_BOT_CLIENT_ID }}
     secrets:
-      app_id: ${{ secrets.OPENWISP_BOT_APP_ID }}
       private_key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
