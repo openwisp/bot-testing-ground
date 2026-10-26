@@ -4,18 +4,15 @@ on:
     types: [created]
 permissions:
   contents: read
-  issues: write
 concurrency:
   group: bot-autoassign-issue-${{ github.repository }}-${{ github.event.issue.number }}
   cancel-in-progress: true
 jobs:
   respond-to-assign-request:
     if: github.event.issue.pull_request == null
-    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/709-flag-invalid-prs
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
     with:
       bot_command: issue_assignment
-      openwisp_utils_repo: prathmeshkulkarni-coder/openwisp-utils
-      openwisp_utils_ref: feature/709-flag-invalid-prs
     secrets:
       OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}

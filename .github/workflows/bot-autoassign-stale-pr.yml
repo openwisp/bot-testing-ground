@@ -5,18 +5,14 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 concurrency:
   group: bot-autoassign-stale-pr-${{ github.repository }}
   cancel-in-progress: false
 jobs:
   manage-stale-prs-python:
-    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/709-flag-invalid-prs
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
     with:
       bot_command: stale_pr
-      openwisp_utils_repo: prathmeshkulkarni-coder/openwisp-utils
-      openwisp_utils_ref: feature/709-flag-invalid-prs
     secrets:
       OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
