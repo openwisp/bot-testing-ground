@@ -10,7 +10,7 @@ concurrency:
 jobs:
   auto-assign-issue:
     if: github.event.action != 'closed' || github.event.pull_request.merged == false
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@5072c81386b436b073b67bc7918cec647f9e3414 # 0.1.0
     with:
       bot_command: issue_assignment
     secrets:

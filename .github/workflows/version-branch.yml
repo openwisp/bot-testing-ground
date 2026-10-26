@@ -19,7 +19,7 @@ jobs:
             module_name: version_fixture_package
           - description: version-submodule fixture
             module_name: version_fixture_submodule.version
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-version-branch.yml@issues/805-migrate-reusable-actions
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-version-branch.yml@5072c81386b436b073b67bc7918cec647f9e3414 # 0.1.0
     with:
       module_name: ${{ matrix.module_name }}
       install_package: true

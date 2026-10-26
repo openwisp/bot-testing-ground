@@ -12,7 +12,7 @@ concurrency:
 jobs:
   reassign-on-reopen:
     if: github.event_name == 'pull_request_target' && github.event.action == 'reopened'
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@5072c81386b436b073b67bc7918cec647f9e3414 # 0.1.0
     with:
       bot_command: pr_reopen
     secrets:
@@ -20,7 +20,7 @@ jobs:
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
   handle-pr-activity:
     if: github.event_name == 'issue_comment' && github.event.issue.pull_request && github.event.issue.user.login == github.event.comment.user.login
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@5072c81386b436b073b67bc7918cec647f9e3414 # 0.1.0
     with:
       bot_command: pr_reopen
     secrets:
