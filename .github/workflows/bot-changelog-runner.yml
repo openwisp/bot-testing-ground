@@ -1,0 +1,83 @@
+name: Changelog Bot Runner
+
+on:
+  workflow_run:
+    workflows: ["Changelog Bot Trigger"]
+    types:
+      - completed
+
+permissions: {}
+
+jobs:
+  fetch-metadata:
+    name: Fetch PR metadata
+    runs-on: ubuntu-latest
+    if: >
+      github.repository == 'openwisp/bot-testing-ground' &&
+      github.event.workflow_run.name == 'Changelog Bot Trigger' &&
+      github.event.workflow_run.event == 'pull_request_review' &&
+      github.event.workflow_run.conclusion == 'success'
+    permissions:
+      actions: read
+    outputs:
+      pr_number: ${{ steps.metadata.outputs.pr_number }}
+    steps:
+      - name: Download PR metadata
+        id: download
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: changelog-metadata
+          path: ${{ runner.temp }}/changelog-metadata
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+        continue-on-error: true
+
+      - name: Skip missing metadata
+        if: steps.download.outcome == 'failure'
+        run: echo "::warning::No changelog metadata downloaded; skipping changelog generation."
+
+      - name: Read PR metadata
+        if: steps.download.outcome == 'success'
+        id: metadata
+        env:
+          ARTIFACT_DIR: ${{ runner.temp }}/changelog-metadata
+        run: |
+          PR_NUMBER_FILE="$ARTIFACT_DIR/pr_number"
+          if [ ! -d "$ARTIFACT_DIR" ] || [ -L "$ARTIFACT_DIR" ]; then
+            echo "::error::Invalid metadata artifact directory"
+            exit 1
+          fi
+          mapfile -d '' ARTIFACT_FILES < <(find "$ARTIFACT_DIR" -mindepth 1 -maxdepth 1 -print0)
+          if [ "${#ARTIFACT_FILES[@]}" -ne 1 ] || [ "${ARTIFACT_FILES[0]}" != "$PR_NUMBER_FILE" ] || [ -L "$PR_NUMBER_FILE" ] || [ ! -f "$PR_NUMBER_FILE" ]; then
+            echo "::error::Metadata artifact must contain only a regular pr_number file"
+            exit 1
+          fi
+          FILE_SIZE=$(stat -c %s "$PR_NUMBER_FILE")
+          if [ "$FILE_SIZE" -gt 16 ]; then
+            echo "::error::Metadata artifact is too large"
+            exit 1
+          fi
+          PR_NUMBER=$(< "$PR_NUMBER_FILE")
+          if ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "::error::Invalid PR number: $PR_NUMBER"
+            exit 1
+          fi
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+  changelog:
+    needs: fetch-metadata
+    if: >
+      github.repository == 'openwisp/bot-testing-ground' &&
+      needs.fetch-metadata.outputs.pr_number != ''
+    concurrency:
+      group: changelog-runner-${{ github.repository }}-${{ needs.fetch-metadata.outputs.pr_number }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-changelog.yml@issues/805-migrate-reusable-actions
+    with:
+      pr_number: ${{ needs.fetch-metadata.outputs.pr_number }}
+    secrets:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
+      OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}

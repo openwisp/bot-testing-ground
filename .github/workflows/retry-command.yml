@@ -1,0 +1,65 @@
+name: Retry Command Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  retry-command:
+    name: ${{ matrix.scenario }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - scenario: Immediate success
+            succeed_on_attempt: 1
+            expected_attempts: 1
+            expected_outcome: success
+          - scenario: Success on final attempt
+            succeed_on_attempt: 3
+            expected_attempts: 3
+            expected_outcome: success
+          - scenario: Exhausted retries
+            succeed_on_attempt: 0
+            expected_attempts: 3
+            expected_outcome: failure
+    env:
+      SUCCEED_ON_ATTEMPT: ${{ matrix.succeed_on_attempt }}
+    steps:
+      - name: Initialize attempt counter
+        run: |
+          echo "ATTEMPTS_FILE=$RUNNER_TEMP/retry-attempts" >> "$GITHUB_ENV"
+          echo 0 > "$RUNNER_TEMP/retry-attempts"
+
+      - name: Run retry command
+        id: retry
+        continue-on-error: true
+        uses: openwisp/openwisp-actions/.github/actions/retry-command@issues/805-migrate-reusable-actions
+        with:
+          max_attempts: "3"
+          delay_seconds: "0"
+          command: |
+            fixture_attempts=$(cat "$ATTEMPTS_FILE")
+            fixture_attempts=$((fixture_attempts + 1))
+            echo "$fixture_attempts" > "$ATTEMPTS_FILE"
+            test "$fixture_attempts" -eq "$SUCCEED_ON_ATTEMPT"
+
+      - name: Verify outcome and attempt count
+        if: always()
+        env:
+          ACTUAL_OUTCOME: ${{ steps.retry.outcome }}
+          EXPECTED_OUTCOME: ${{ matrix.expected_outcome }}
+          EXPECTED_ATTEMPTS: ${{ matrix.expected_attempts }}
+        run: |
+          attempts=$(cat "$ATTEMPTS_FILE")
+          if [ "$ACTUAL_OUTCOME" != "$EXPECTED_OUTCOME" ] || [ "$attempts" -ne "$EXPECTED_ATTEMPTS" ]; then
+            echo "::error::Expected $EXPECTED_OUTCOME after $EXPECTED_ATTEMPTS attempts; got $ACTUAL_OUTCOME after $attempts attempts."
+            exit 1
+          fi

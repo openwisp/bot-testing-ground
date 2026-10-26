@@ -13,13 +13,13 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
 
 jobs:
   backport-on-push:
     if: github.event_name == 'push'
-    uses: ./.github/workflows/reusable-backport.yml
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@issues/805-migrate-reusable-actions
     with:
       commit_sha: ${{ github.sha }}
     secrets:
@@ -34,7 +34,7 @@ jobs:
       github.event.issue.state == 'closed' &&
       contains(fromJSON('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.comment.author_association) &&
       startsWith(github.event.comment.body, '/backport')
-    uses: ./.github/workflows/reusable-backport.yml
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@issues/805-migrate-reusable-actions
     with:
       pr_number: ${{ github.event.issue.number }}
       comment_body: ${{ github.event.comment.body }}

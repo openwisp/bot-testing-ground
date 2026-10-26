@@ -6,29 +6,23 @@ on:
     types: [created]
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 concurrency:
   group: bot-autoassign-pr-reopen-${{ github.repository }}-${{ github.event.pull_request.number || github.event.issue.number }}
   cancel-in-progress: true
 jobs:
   reassign-on-reopen:
     if: github.event_name == 'pull_request_target' && github.event.action == 'reopened'
-    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/709-flag-invalid-prs
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
     with:
       bot_command: pr_reopen
-      openwisp_utils_repo: prathmeshkulkarni-coder/openwisp-utils
-      openwisp_utils_ref: feature/709-flag-invalid-prs
     secrets:
       OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
   handle-pr-activity:
     if: github.event_name == 'issue_comment' && github.event.issue.pull_request && github.event.issue.user.login == github.event.comment.user.login
-    uses: prathmeshkulkarni-coder/openwisp-utils/.github/workflows/reusable-bot-autoassign.yml@feature/709-flag-invalid-prs
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@issues/805-migrate-reusable-actions
     with:
       bot_command: pr_reopen
-      openwisp_utils_repo: prathmeshkulkarni-coder/openwisp-utils
-      openwisp_utils_ref: feature/709-flag-invalid-prs
     secrets:
       OPENWISP_BOT_APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       OPENWISP_BOT_PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
