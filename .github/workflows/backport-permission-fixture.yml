@@ -1,0 +1,12 @@
+name: Backport permission fixture
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Backport workflow permission test"
