@@ -114,15 +114,16 @@ jobs:
       - name: Run review
         env:
           OPENCODE_CONFIG: ${{ github.workspace }}/.github/ai-review/opencode.json
-          MODEL: ${{ vars.AI_REVIEW_MODEL || 'opencode/deepseek-v4.1-flash-free' }}
+          MODEL: ${{ vars.AI_REVIEW_MODEL || 'opencode/mimo-v2.6-flash-free' }}
           PROMPT_FILE: ${{ github.workspace }}/.github/ai-review/${{ needs.gate.outputs.stage }}.md
         run: |
           set -euo pipefail
+          opencode models opencode | grep -E -- '-free$' || true
           opencode run "$(cat "$PROMPT_FILE")" --pure --model "$MODEL" \
             --dir "$RUNNER_TEMP/pr" --file "$RUNNER_TEMP/pr.diff" \
             > "$RUNNER_TEMP/output.txt" || true
           python3 .github/ai-review/extract_findings.py \
-            "$RUNNER_TEMP/output.txt" "$RUNNER_TEMP/pr.files" \
+            "$RUNNER_TEMP/output.txt" "$RUNNER_TEMP/pr.files" "$RUNNER_TEMP/pr.diff" \
             > "$RUNNER_TEMP/findings.json"
           cat "$RUNNER_TEMP/findings.json"
 
@@ -181,13 +182,12 @@ jobs:
           private-key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
           permission-pull-requests: write
 
-      - name: Publish review
+      - name: Publish with Crit
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           PR_NUMBER: ${{ github.event.issue.number }}
           HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           STAGE: ${{ needs.gate.outputs.stage }}
-          REPOSITORY: ${{ github.repository }}
           FINDINGS: ${{ runner.temp }}/findings/findings.json
         run: |
           set -euo pipefail
@@ -195,14 +195,9 @@ jobs:
           SUMMARY=$(jq -er '.summary' "$FINDINGS")
           BODY=$(printf 'AI %s of %s (advisory)\n\n%s' "$STAGE" "$HEAD_SHA" "$SUMMARY")
           jq '.comments' "$FINDINGS" > "$RUNNER_TEMP/comments.json"
-          if [ "$(jq 'length' "$RUNNER_TEMP/comments.json")" -gt 0 ]; then
-            crit comment --json --file "$RUNNER_TEMP/comments.json"
-            crit push "$PR_NUMBER" --event "$EVENT" --message "$BODY"
-          else
-            case "$EVENT" in
-              request-changes) GH_EVENT=REQUEST_CHANGES ;;
-              *) GH_EVENT=COMMENT ;;
-            esac
-            gh api "repos/$REPOSITORY/pulls/$PR_NUMBER/reviews" \
-              -f commit_id="$HEAD_SHA" -f event="$GH_EVENT" -f body="$BODY" --silent
+          if [ "$(jq 'length' "$RUNNER_TEMP/comments.json")" -eq 0 ]; then
+            echo "::error::The pull request has no added lines to attach the review to"
+            exit 1
           fi
+          crit comment --json --file "$RUNNER_TEMP/comments.json"
+          crit push "$PR_NUMBER" --event "$EVENT" --message "$BODY"
