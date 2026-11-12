@@ -1,0 +1,18 @@
+name: AI Review
+
+on:
+  issue_comment: # zizmor: ignore[dangerous-triggers] Only organization members can request reviews and pull request content is only read as data.
+    types: [created]
+
+permissions: {}
+
+jobs:
+  ai-review:
+    permissions:
+      contents: read
+      pull-requests: read # Reads earlier reviews and comments for the final review.
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-ai-review.yml@issues/15-ai-review # zizmor: ignore[unpinned-uses] Tests the shared AI review workflow from its pull request branch.
+    secrets:
+      APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
+      PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
+      OPENCODE_AUTH: ${{ secrets.OPENCODE_AUTH }}
