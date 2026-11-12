@@ -1,0 +1,202 @@
+name: AI Review
+
+on:
+  issue_comment: # zizmor: ignore[dangerous-triggers] Only organization members can request reviews and pull request content is only read as data.
+    types: [created]
+
+permissions: {}
+
+jobs:
+  gate:
+    name: Check review request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: >
+      github.repository == 'openwisp/bot-testing-ground' &&
+      github.event.issue.pull_request &&
+      (github.event.comment.author_association == 'OWNER' ||
+       github.event.comment.author_association == 'MEMBER')
+    permissions: {}
+    outputs:
+      stage: ${{ steps.command.outputs.stage }}
+      head_sha: ${{ steps.pr.outputs.head_sha }}
+      base_sha: ${{ steps.pr.outputs.base_sha }}
+    steps:
+      - name: Parse command
+        id: command
+        env:
+          BODY: ${{ github.event.comment.body }}
+        run: |
+          COMMAND=$(printf '%s' "$BODY" | tr -d '\r' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          case "$COMMAND" in
+            /review) echo "stage=review" >> "$GITHUB_OUTPUT" ;;
+            *) echo "Not a review command" ;;
+          esac
+
+      - name: Generate read-only app token
+        if: steps.command.outputs.stage != ''
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ secrets.OPENWISP_BOT_APP_ID }}
+          private-key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
+          permission-members: read
+          permission-pull-requests: read
+
+      - name: Verify organization membership
+        if: steps.command.outputs.stage != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          USER_LOGIN: ${{ github.event.comment.user.login }}
+        run: gh api "orgs/openwisp/members/$USER_LOGIN" --silent
+
+      - name: Read pull request
+        if: steps.command.outputs.stage != ''
+        id: pr
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          PR=$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER")
+          HEAD_SHA=$(jq -er '.head.sha' <<< "$PR")
+          BASE_SHA=$(jq -er '.base.sha' <<< "$PR")
+          for SHA in "$HEAD_SHA" "$BASE_SHA"; do
+            if ! [[ "$SHA" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::Invalid commit reference"
+              exit 1
+            fi
+          done
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$BASE_SHA" >> "$GITHUB_OUTPUT"
+
+  review:
+    name: Run ${{ needs.gate.outputs.stage }}
+    needs: gate
+    if: needs.gate.outputs.stage != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ai-review-${{ github.repository }}-${{ github.event.issue.number }}-${{ needs.gate.outputs.stage }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout trusted revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch pull request as data
+        env:
+          PR_NUMBER: ${{ github.event.issue.number }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
+          BASE_SHA: ${{ needs.gate.outputs.base_sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "refs/pull/$PR_NUMBER/head"
+          git worktree add --detach "$RUNNER_TEMP/pr" "$HEAD_SHA"
+          git diff "$BASE_SHA...$HEAD_SHA" > "$RUNNER_TEMP/pr.diff"
+          git diff --name-only "$BASE_SHA...$HEAD_SHA" > "$RUNNER_TEMP/pr.files"
+          rm -rf "$RUNNER_TEMP/pr/.opencode" "$RUNNER_TEMP/pr/opencode.json" \
+            "$RUNNER_TEMP/pr/opencode.jsonc" "$RUNNER_TEMP/pr/AGENTS.md" \
+            "$RUNNER_TEMP/pr/CLAUDE.md"
+          if [ -f AGENTS.md ]; then
+            cp AGENTS.md "$RUNNER_TEMP/pr/AGENTS.md"
+          fi
+
+      - name: Install OpenCode
+        run: npm install -g opencode-ai@1.18.35 # zizmor: ignore[adhoc-packages] The exact OpenCode release is pinned.
+
+      - name: Run review
+        env:
+          OPENCODE_CONFIG: ${{ github.workspace }}/.github/ai-review/opencode.json
+          MODEL: ${{ vars.AI_REVIEW_MODEL || 'opencode/deepseek-v4.1-flash-free' }}
+          PROMPT_FILE: ${{ github.workspace }}/.github/ai-review/${{ needs.gate.outputs.stage }}.md
+        run: |
+          set -euo pipefail
+          opencode run --pure --model "$MODEL" --dir "$RUNNER_TEMP/pr" \
+            --file "$RUNNER_TEMP/pr.diff" "$(cat "$PROMPT_FILE")" \
+            > "$RUNNER_TEMP/output.txt" || true
+          python3 .github/ai-review/extract_findings.py \
+            "$RUNNER_TEMP/output.txt" "$RUNNER_TEMP/pr.files" \
+            > "$RUNNER_TEMP/findings.json"
+          cat "$RUNNER_TEMP/findings.json"
+
+      - name: Upload findings
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ai-review-findings
+          path: ${{ runner.temp }}/findings.json
+          retention-days: 1
+
+  publish:
+    name: Publish review
+    needs: [gate, review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: ai-review-${{ github.repository }}-${{ github.event.issue.number }}-${{ needs.gate.outputs.stage }}-publish
+      cancel-in-progress: true
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout trusted revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Fetch pull request as data
+        env:
+          PR_NUMBER: ${{ github.event.issue.number }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "refs/pull/$PR_NUMBER/head"
+          git checkout -B "ai-review-$PR_NUMBER" "$HEAD_SHA"
+
+      - name: Download findings
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ai-review-findings
+          path: ${{ runner.temp }}/findings
+
+      - name: Install Crit
+        run: |
+          set -euo pipefail
+          curl -fsSLo "$RUNNER_TEMP/crit" \
+            https://github.com/tomasz-tomczyk/crit/releases/download/v0.23.2/crit-linux-amd64
+          echo "10aa756a3146362be3a349cc8223955e23a1cd6daa0abbb13dd500741f793a90  $RUNNER_TEMP/crit" \
+            | sha256sum --check
+          sudo install -m 0755 "$RUNNER_TEMP/crit" /usr/local/bin/crit
+
+      - name: Generate write app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ secrets.OPENWISP_BOT_APP_ID }}
+          private-key: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
+          permission-pull-requests: write
+
+      - name: Publish with Crit
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
+          STAGE: ${{ needs.gate.outputs.stage }}
+          FINDINGS: ${{ runner.temp }}/findings/findings.json
+        run: |
+          set -euo pipefail
+          EVENT=$(jq -er '.event' "$FINDINGS")
+          SUMMARY=$(jq -er '.summary' "$FINDINGS")
+          jq '.comments' "$FINDINGS" > "$RUNNER_TEMP/comments.json"
+          if [ "$(jq 'length' "$RUNNER_TEMP/comments.json")" -gt 0 ]; then
+            crit comment --json --file "$RUNNER_TEMP/comments.json"
+          fi
+          crit push "$PR_NUMBER" --event "$EVENT" \
+            --message "AI $STAGE of $HEAD_SHA (advisory)
+
+          $SUMMARY"
