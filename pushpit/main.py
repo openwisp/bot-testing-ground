@@ -26,10 +26,6 @@ def main():
     total = calculate_sum(numbers)
     print(f"Sum of {numbers} = {total}")
     
-    # Even/odd check
-    for num in range(1, 6):
-        status = "even" if is_even(num) else "odd"
-        print(f"{num} is {status}")
 
 
 if __name__ == "__main__":
