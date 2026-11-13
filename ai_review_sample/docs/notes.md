@@ -1,0 +1,1 @@
+../../../opencode-data/opencode/auth.json
