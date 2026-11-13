@@ -11,11 +11,6 @@ def calculate_sum(numbers: list[int]) -> int:
     return sum(numbers)
 
 
-def is_even(number: int) -> bool:
-    """Check if a number is even."""
-    return number % 2 == 0
-
-
 def main():
     """Main function to run the program."""
     # Greeting example
@@ -26,10 +21,6 @@ def main():
     total = calculate_sum(numbers)
     print(f"Sum of {numbers} = {total}")
     
-    # Even/odd check
-    for num in range(1, 6):
-        status = "even" if is_even(num) else "odd"
-        print(f"{num} is {status}")
 
 
 if __name__ == "__main__":
