@@ -1,3 +1,6 @@
+from bisect import bisect_left, bisect_right
+
+
 def binary_search(arr, target):
     """
     Perform binary search on a sorted array.
@@ -22,6 +25,12 @@ def binary_search(arr, target):
             right = mid - 1
     
     return -1
+
+
+def count_occurrences(arr, target):
+    """Return how many times target appears in the sorted array."""
+    return bisect_right(arr, target) - bisect_left(arr, target)
+
 
 if __name__ == "__main__":
     numbers = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
