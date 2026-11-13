@@ -11,11 +11,6 @@ def calculate_sum(numbers: list[int]) -> int:
     return sum(numbers)
 
 
-def is_even(number: int) -> bool:
-    """Check if a number is even."""
-    return number % 2 == 0
-
-
 def main():
     """Main function to run the program."""
     # Greeting example
