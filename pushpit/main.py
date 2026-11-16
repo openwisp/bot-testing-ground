@@ -3,6 +3,8 @@
 
 def greet(name: str) -> str:
     """Return a greeting message."""
+    if not name:
+        return "Hello!"
     return f"Hello, {name}! Welcome to Python."
 
 
