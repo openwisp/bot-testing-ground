@@ -10,7 +10,8 @@ jobs:
   ai-review:
     permissions:
       contents: read
-      pull-requests: read # Reads earlier reviews and comments for the final review.
+      issues: read # Reads the issues linked in the pull request description.
+      pull-requests: read # Reads the pull request description, reviews and comments.
     uses: openwisp/openwisp-actions/.github/workflows/reusable-ai-review.yml@issues/15-ai-review # zizmor: ignore[unpinned-uses] Tests the shared AI review workflow from its pull request branch.
     secrets:
       APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
