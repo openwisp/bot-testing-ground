@@ -8,11 +8,18 @@ permissions: {}
 
 jobs:
   ai-review:
+    if: >
+      github.repository == 'openwisp/bot-testing-ground' &&
+      github.event.issue.pull_request &&
+      contains(fromJSON('["MEMBER", "OWNER"]'), github.event.comment.author_association) &&
+      (startsWith(github.event.comment.body, '/review') ||
+       startsWith(github.event.comment.body, '/security-review') ||
+       startsWith(github.event.comment.body, '/final-review'))
     permissions:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@issues/15-ai-review # zizmor: ignore[unpinned-uses] Tests the shared AI review workflow from its pull request branch.
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@master # zizmor: ignore[unpinned-uses] Pilot: uses the latest shared AI review logic so improvements apply to all repositories at once.
     secrets:
       APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
