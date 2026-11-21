@@ -19,7 +19,7 @@ permissions:
 jobs:
   backport-on-push:
     if: github.event_name == 'push'
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@719b0b61df04e63c11deb48f7f9562d23df01f4b # 0.2.0
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
     with:
       commit_sha: ${{ github.sha }}
     secrets:
@@ -34,7 +34,7 @@ jobs:
       github.event.issue.state == 'closed' &&
       contains(fromJSON('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.comment.author_association) &&
       startsWith(github.event.comment.body, '/backport')
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@719b0b61df04e63c11deb48f7f9562d23df01f4b # 0.2.0
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-backport.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
     with:
       pr_number: ${{ github.event.issue.number }}
       comment_body: ${{ github.event.comment.body }}

@@ -1,6 +1,7 @@
 name: PR Issue Auto-Assignment
 on:
-  pull_request_target:
+  # Fork PR assignment runs trusted bot code only.
+  pull_request_target: # zizmor: ignore[dangerous-triggers]
     types: [opened, reopened, closed, edited, ready_for_review]
 permissions:
   contents: read
@@ -12,7 +13,7 @@ jobs:
     if: >
       github.repository == 'openwisp/bot-testing-ground' &&
       (github.event.action != 'closed' || github.event.pull_request.merged == false)
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@5072c81386b436b073b67bc7918cec647f9e3414 # 0.1.0
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
     with:
       bot_command: issue_assignment
     secrets:

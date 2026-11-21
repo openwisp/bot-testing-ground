@@ -1,7 +1,8 @@
 name: AI Review
 
 on:
-  issue_comment: # zizmor: ignore[dangerous-triggers] Only organization members can request reviews and pull request content is only read as data.
+  # Only organization members can request reviews; verification may run PR code in the sandbox.
+  issue_comment: # zizmor: ignore[dangerous-triggers]
     types: [created]
 
 permissions: {}
@@ -19,11 +20,7 @@ jobs:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@ai-review-test-environment # zizmor: ignore[unpinned-uses] Tests the shared AI review workflow from its pull request branch.
-    with:
-      apt-packages: gdal-bin
-      compose-services: redis
-      pip-install: redis
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
     secrets:
       APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}
