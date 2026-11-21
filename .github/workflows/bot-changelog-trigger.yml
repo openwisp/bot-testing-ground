@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: openwisp/openwisp-actions
-          ref: 9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+          ref: d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
           path: openwisp-actions
           persist-credentials: false
 
@@ -35,7 +35,7 @@ jobs:
         id: check
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
-        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/check-title.sh
+        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/check_title.sh
 
       - name: Save PR metadata
         if: steps.check.outputs.has_noteworthy == 'true'

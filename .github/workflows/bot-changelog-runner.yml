@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: openwisp/openwisp-actions
-          ref: 9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+          ref: d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
           path: openwisp-actions
           persist-credentials: false
 
@@ -52,7 +52,7 @@ jobs:
         id: metadata
         env:
           ARTIFACT_DIR: ${{ runner.temp }}/changelog-metadata
-        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/read-metadata.sh
+        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/read_metadata.sh
 
       - name: Verify triggering pull request
         if: steps.download.outcome == 'success'
@@ -62,7 +62,7 @@ jobs:
           EXPECTED_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           PR_NUMBER: ${{ steps.metadata.outputs.pr_number }}
           REPOSITORY: ${{ github.repository }}
-        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/verify-association.sh
+        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/verify_association.sh
 
       - name: Verify current eligible approval
         if: steps.download.outcome == 'success'
@@ -72,7 +72,7 @@ jobs:
           EXPECTED_HEAD_SHA: ${{ steps.association.outputs.head_sha }}
           PR_NUMBER: ${{ steps.metadata.outputs.pr_number }}
           REPOSITORY: ${{ github.repository }}
-        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/verify-approval.sh
+        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/verify_approval.sh
 
   changelog:
     name: Generate changelog entry
@@ -99,7 +99,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: openwisp/openwisp-actions
-          ref: 9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+          ref: d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
           path: openwisp-actions
           persist-credentials: false
 
@@ -109,7 +109,7 @@ jobs:
           APPROVED_BASE_SHA: ${{ needs.fetch-metadata.outputs.base_sha }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/prepare-diff.sh
+        run: bash openwisp-actions/.github/actions/bot-changelog-generator/caller/prepare_diff.sh
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7

@@ -20,7 +20,7 @@ jobs:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@master # zizmor: ignore[unpinned-uses] Pilot: uses the latest shared AI review logic so improvements apply to all repositories at once.
     secrets:
       APP_ID: ${{ secrets.OPENWISP_BOT_APP_ID }}
       PRIVATE_KEY: ${{ secrets.OPENWISP_BOT_PRIVATE_KEY }}

@@ -19,7 +19,7 @@ jobs:
             module_name: version_fixture_package
           - description: version-submodule fixture
             module_name: version_fixture_submodule.version
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-version-branch.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-version-branch.yml@d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
     with:
       module_name: ${{ matrix.module_name }}
       install_package: true

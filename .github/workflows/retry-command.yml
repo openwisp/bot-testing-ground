@@ -41,7 +41,7 @@ jobs:
       - name: Run retry command
         id: retry
         continue-on-error: true
-        uses: openwisp/openwisp-actions/.github/actions/retry-command@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+        uses: openwisp/openwisp-actions/.github/actions/retry-command@d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
         with:
           max_attempts: "3"
           delay_seconds: "0"

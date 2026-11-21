@@ -13,7 +13,7 @@ jobs:
     if: >
       github.repository == 'openwisp/bot-testing-ground' &&
       (github.event.action != 'closed' || github.event.pull_request.merged == false)
-    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@9f8710ed0f53d655e1a1708c53ac446b372ceee6 # PR #30
+    uses: openwisp/openwisp-actions/.github/workflows/reusable-bot-autoassign.yml@d6cc603701fe96a84115b060d34e8844a969cc41 # 0.3.0
     with:
       bot_command: issue_assignment
     secrets:
