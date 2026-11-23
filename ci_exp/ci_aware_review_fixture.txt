@@ -1,1 +1,2 @@
 CI-aware review integration fixture: intentionally failing primary CI.
+Retest bounded CI review evidence collection.
