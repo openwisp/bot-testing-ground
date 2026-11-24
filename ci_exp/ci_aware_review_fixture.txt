@@ -1,3 +1,4 @@
 CI-aware review integration fixture: successful primary CI.
 Stale request test: first head.
 Stale request test: newer head.
+Retest the clearer waiting comment and direct review link after successful CI.
