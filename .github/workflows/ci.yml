@@ -3,11 +3,14 @@ name: CI / review fixture
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
 
 permissions: {}
 
 concurrency:
-  group: ci-aware-fixture-${{ github.event.pull_request.number }}
+  group: ci-aware-fixture-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,6 +44,7 @@ jobs:
       - name: Run tests
         run: ./runtests -q
       - name: Complete the requested fixture scenario
+        if: github.event_name == 'pull_request'
         env:
           FAIL_SCENARIO: ${{ contains(github.head_ref, 'ci-aware-failure') }}
         run: |
