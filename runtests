@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""Run the review fixtures with a restricted set of pytest arguments."""
+
+import re
+import sys
+
+
+def main():
+    selectors = []
+    flags = []
+    for argument in sys.argv[1:]:
+        if argument in ("-q", "-v", "-x"):
+            flags.append(argument)
+        elif re.fullmatch(r"tests/test_\w+\.py(?:::test_\w+)?", argument):
+            selectors.append(argument)
+        else:
+            print(f"Unsupported test argument: {argument}", file=sys.stderr)
+            return 2
+    import pytest
+
+    return pytest.main([*flags, *(selectors or ["tests"])])
+
+
+if __name__ == "__main__":
+    sys.exit(main())
