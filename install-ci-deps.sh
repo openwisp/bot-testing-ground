@@ -3,6 +3,12 @@
 set -euo pipefail
 test "${CI:-}" = true
 test "${DISTRO:-}" = ubuntu
-python -m venv .ci-review-venv
-.ci-review-venv/bin/python -m pip install -r requirements-test.txt
-python -m pip install -r requirements-test.txt
+if [ "$(id -un)" = reviewer ]; then
+  if probe=$(mktemp "$(dirname "$(command -v python)")/review-write-probe.XXXXXXXX" 2>/dev/null); then
+    rm "$probe"
+    echo "Reviewer can write to the selected Python toolchain" >&2
+    exit 1
+  fi
+fi
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements-test.txt
