@@ -1,7 +1,7 @@
 """Exercise the CI environment prepared for the review fixture."""
 
-from ci_exp.file import add
+import sys
 
 
-def test_add_zero():
-    assert add(3, 0) == 3
+def test_review_uses_virtualenv():
+    assert sys.prefix != sys.base_prefix
