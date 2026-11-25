@@ -18,6 +18,12 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      matrix:
+        distro: [ubuntu]
+        include:
+          - distro: ubuntu
+            review_default: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -40,6 +46,8 @@ jobs:
                 'install-ci-deps.sh', 'install-dev.sh')) }}
       - name: Install test dependencies
         id: deps
+        env:
+          DISTRO: ${{ matrix.distro }}
         run: ./install-ci-deps.sh
       - name: Run tests
         run: ./runtests -q
