@@ -50,7 +50,7 @@ jobs:
           DISTRO: ${{ matrix.distro }}
         run: ./install-ci-deps.sh
       - name: Run tests
-        run: ./runtests -q
+        run: .venv/bin/python ./runtests -q
       - name: Complete the requested fixture scenario
         if: github.event_name == 'pull_request'
         env:
