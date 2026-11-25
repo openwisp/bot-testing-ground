@@ -28,9 +28,9 @@ jobs:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    # Follow PR #41 while testing CI dependency reuse before release.
+    # Testing openwisp-actions#46 (live AI review diagnostics), then back to PR #41.
     uses: >- # zizmor: ignore[unpinned-uses]
-      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@issues/39-review-ci-reuse
+      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@ai-review-live-diagnostics
     with:
       wait_for_ci: true
     secrets:
