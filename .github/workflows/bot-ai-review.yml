@@ -30,7 +30,7 @@ jobs:
       pull-requests: read # Reads the pull request description, reviews and comments.
     # Follow the same merged review workflow as the rollout callers.
     uses: >- # zizmor: ignore[unpinned-uses]
-      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@master
+      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@ai-review-skip-coderabbit-requests
     with:
       wait_for_ci: true
     secrets:
