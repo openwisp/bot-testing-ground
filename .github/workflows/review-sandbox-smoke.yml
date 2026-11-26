@@ -1,0 +1,30 @@
+name: Review sandbox smoke test
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions: {}
+
+jobs:
+  test:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'test/review-sandbox-runtime'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: openwisp/openwisp-actions
+          ref: 178ed026e45a2cb8340b586fe89ffbc0a79a7524
+          path: openwisp-actions
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Run sandbox smoke test
+        run: bash tests/run_review_sandbox_smoke.sh
