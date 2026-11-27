@@ -4,6 +4,11 @@
   "formatter": false,
   "lsp": false,
   "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "allow",
+      "*.env.*": "allow"
+    },
     "edit": "allow",
     "webfetch": "allow",
     "websearch": "allow",
