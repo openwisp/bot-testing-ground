@@ -28,9 +28,8 @@ jobs:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    # Follow the same merged review workflow as the rollout callers.
-    uses: >- # zizmor: ignore[unpinned-uses]
-      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@master
+    # Temporary copy of the shared workflow with fixes under test.
+    uses: ./.github/workflows/reusable-bot-ai-review.yml
     with:
       wait_for_ci: true
     secrets:
