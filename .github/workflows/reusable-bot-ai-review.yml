@@ -215,7 +215,7 @@ jobs:
     name: Run ${{ needs.gate.outputs.stage }}
     needs: gate
     if: needs.gate.outputs.stage != ''
-    runs-on: ubuntu-latest
+    runs-on: ${{ needs.gate.outputs.runner || 'ubuntu-latest' }}
     timeout-minutes: 60
     env:
       PR_DIR: /tmp/ai-review/pr

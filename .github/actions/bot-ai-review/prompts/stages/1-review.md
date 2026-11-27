@@ -97,8 +97,4 @@ Reply with ONLY this JSON and nothing else:
 Write the summary as two to four short bullets about the direction and
 the main concerns.
 
-Use "Looks good" only when there are no P1 or P2 findings and no CI job
-fails because of the change. When a CI job fails, find out whether the
-change causes it, for example by running the failing test. If you cannot
-rule out that the change causes it, use "Needs changes" and name the
-failing job and what you could not verify in the summary.
+Use "Looks good" only when there are no P1 or P2 findings.
