@@ -1,0 +1,55 @@
+name: Cache CI dependencies
+description: Share repository-selected dependency downloads between CI and AI review.
+inputs:
+  mode:
+    description: Use write in CI and restore in AI review.
+    required: true
+  dependency-glob:
+    description: Glob matching dependency input files.
+    required: true
+  image-os:
+    description: GitHub runner image identifier.
+    required: true
+  python-version:
+    description: Selected Python version, if applicable.
+    default: ""
+  node-version:
+    description: Selected Node.js version, if applicable.
+    default: ""
+  django-version:
+    description: Selected Django requirement, if applicable.
+    default: ""
+  variant:
+    description: Colon-separated values of matrix axes declared by AI_REVIEW_CACHE_AXES.
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Calculate cache key
+      id: key
+      shell: bash
+      env:
+        MODE: ${{ inputs.mode }}
+        IMAGE_OS: ${{ inputs.image-os }}
+        PYTHON_VERSION: ${{ inputs.python-version }}
+        NODE_VERSION: ${{ inputs.node-version }}
+        DJANGO_VERSION: ${{ inputs.django-version }}
+        VARIANT: ${{ inputs.variant }}
+        DEPS_HASH: ${{ hashFiles(inputs.dependency-glob, 'install-ci-deps.sh', '!openwisp-actions/**') }}
+      run: |
+        case "$MODE" in write|restore) ;; *) echo "Invalid cache mode" >&2; exit 1 ;; esac
+        key=$(printf '%s\0' "$RUNNER_OS" "$RUNNER_ARCH" "$IMAGE_OS" "$PYTHON_VERSION" \
+          "$NODE_VERSION" "$DJANGO_VERSION" "$VARIANT" "$DEPS_HASH" | sha256sum | cut -d ' ' -f 1)
+        echo "key=ci-deps-$key" >> "$GITHUB_OUTPUT"
+    - name: Restore or save dependencies in CI
+      if: inputs.mode == 'write'
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.cache/ci-deps
+        key: ${{ steps.key.outputs.key }}
+    - name: Restore dependencies for review
+      if: inputs.mode == 'restore'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.cache/ci-deps
+        key: ${{ steps.key.outputs.key }}
