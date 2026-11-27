@@ -12,5 +12,7 @@ packages:
 Both fixtures expose `VERSION` and `__version__` as version tuples while
 remaining free of runtime dependencies.
 
-Install the test dependencies with `./install-ci-deps.sh`, then run the review
-fixtures with `./runtests`. To run one fixture, use `./runtests tests/test_example.py`.
+For local development, install the test dependencies in your Python virtual
+environment with `python -m pip install -r requirements-test.txt`, then run the
+review fixtures with `./runtests`. To run one fixture, use
+`./runtests tests/test_example.py`.
