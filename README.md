@@ -1,6 +1,7 @@
 # Bot Testing Ground
 
-This repository contains focused fixtures for testing OpenWISP automation.
+This repository contains focused fixtures for testing OpenWISP automation,
+such as the on-demand AI review.
 
 The version fixtures represent the two Python version layouts used by OpenWISP
 packages:
