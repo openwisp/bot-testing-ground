@@ -1,0 +1,26 @@
+name: Review summary recovery smoke test
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions: {}
+
+jobs:
+  test:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'test/review-summary-recovery'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: openwisp/openwisp-actions
+          ref: 7f791d024372df537307d1d36da8c5e0064076ed
+          path: openwisp-actions
+          persist-credentials: false
+      - name: Verify review extraction
+        run: python tests/review_summary_smoke.py
