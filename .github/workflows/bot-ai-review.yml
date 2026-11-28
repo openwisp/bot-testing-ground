@@ -28,9 +28,9 @@ jobs:
       contents: read
       issues: read # Reads the issues linked in the pull request description.
       pull-requests: read # Reads the pull request description, reviews and comments.
-    # Follow the issue 54 branch while testing its review publication fixes.
-    uses: >- # zizmor: ignore[unpinned-uses]
-      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@issues/54-ai-review-reliability
+    # Use the merged review workflow after testing openwisp-actions#55.
+    uses: >-
+      openwisp/openwisp-actions/.github/workflows/reusable-bot-ai-review.yml@5feb13d20292cd0f46bbd2e86a0f73d21e2ca6a7
     with:
       wait_for_ci: true
     secrets:
