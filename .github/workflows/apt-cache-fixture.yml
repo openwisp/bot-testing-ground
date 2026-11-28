@@ -47,4 +47,7 @@ jobs:
           image-os: ${{ steps.image.outputs.os }}
           image-version: ${{ steps.image.outputs.version }}
       - name: Check restored archives
-        run: compgen -G "$HOME/.cache/apt-ci/archives/*.deb" >/dev/null
+        run: |
+          compgen -G "$HOME/.cache/apt-ci/archives/*.deb" >/dev/null
+          sudo apt-get update
+          sudo apt-get install -y --reinstall --no-download sl
