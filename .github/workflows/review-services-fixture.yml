@@ -1,0 +1,53 @@
+name: Review services fixture
+
+on:
+  pull_request:
+
+permissions: {}
+
+concurrency:
+  group: review-services-fixture-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify review services
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: openwisp/openwisp-actions
+          ref: 25c11daf632355ac3b482058ee2d06bcd521ba10
+          path: openwisp-actions
+          persist-credentials: false
+      - name: Start Redis from the fixture revision
+        id: services
+        env:
+          DEFAULT_SHA: ${{ github.event.pull_request.head.sha }}
+        run: bash openwisp-actions/.github/actions/ci-dependencies/reusable/review_services.sh start
+      - name: Verify Redis accepts commands
+        working-directory: ${{ steps.services.outputs.directory }}
+        env:
+          SERVICE_PROJECT: ${{ steps.services.outputs.project }}
+        run: test "$(docker compose -p "$SERVICE_PROJECT" exec -T redis redis-cli ping)" = PONG
+      - name: Remove fixture services
+        if: always() && steps.services.outputs.directory != ''
+        env:
+          SERVICE_DIRECTORY: ${{ steps.services.outputs.directory }}
+          SERVICE_PROJECT: ${{ steps.services.outputs.project }}
+        run: |
+          bash openwisp-actions/.github/actions/ci-dependencies/reusable/review_services.sh \
+            stop "$SERVICE_DIRECTORY" "$SERVICE_PROJECT"
+      - name: Verify cleanup
+        env:
+          SERVICE_DIRECTORY: ${{ steps.services.outputs.directory }}
+          SERVICE_PROJECT: ${{ steps.services.outputs.project }}
+        run: |
+          test ! -e "$SERVICE_DIRECTORY"
+          test -z "$(docker ps -q --filter "name=$SERVICE_PROJECT")"
