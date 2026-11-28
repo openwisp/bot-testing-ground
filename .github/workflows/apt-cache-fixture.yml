@@ -1,0 +1,53 @@
+name: APT cache fixture
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  cold:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Identify runner image
+        id: image
+        run: |
+          echo "os=$ImageOS" >> "$GITHUB_OUTPUT"
+          echo "version=$ImageVersion" >> "$GITHUB_OUTPUT"
+      - uses: openwisp/openwisp-actions/.github/actions/apt-cache@e13c60c545cf1f47f22864879de4b2cbd87b5801 # PR 58
+        with:
+          mode: write
+          image-os: ${{ steps.image.outputs.os }}
+          image-version: ${{ steps.image.outputs.version }}
+      - name: Download a package
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --reinstall sl
+          compgen -G "$HOME/.cache/apt-ci/archives/*.deb" >/dev/null
+
+  warm:
+    needs: cold
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Identify runner image
+        id: image
+        run: |
+          echo "os=$ImageOS" >> "$GITHUB_OUTPUT"
+          echo "version=$ImageVersion" >> "$GITHUB_OUTPUT"
+      - uses: openwisp/openwisp-actions/.github/actions/apt-cache@e13c60c545cf1f47f22864879de4b2cbd87b5801 # PR 58
+        with:
+          mode: restore
+          image-os: ${{ steps.image.outputs.os }}
+          image-version: ${{ steps.image.outputs.version }}
+      - name: Check restored archives
+        run: |
+          compgen -G "$HOME/.cache/apt-ci/archives/*.deb" >/dev/null
+          sudo apt-get update
+          sudo apt-get install -y --reinstall --no-download sl
